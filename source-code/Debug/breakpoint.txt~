@@ -1,0 +1,22 @@
+b CPU.h : 372
+b CPU.h : 406
+b CPU.h : 432
+b CPU.h : 446
+b CPU.h : 463
+b CPU.h : 297
+disp cpu.f_stat
+disp cpu.d_stat
+disp cpu.e_stat
+disp cpu.m_stat
+disp cpu.f_icode
+disp cpu.F_stall
+disp cpu.D_icode
+disp cpu.D_stall
+disp cpu.D_bubble
+disp cpu.E_icode
+disp cpu.E_stall
+disp cpu.E_bubble
+disp cpu.M_icode
+disp cpu.M_stall
+disp cpu.M_bubble
+
