@@ -212,6 +212,8 @@ debug/moc_simulator.cpp: E:/qt/5.8/mingw53_32/include/QtWidgets/QMainWindow \
 		E:/qt/5.8/mingw53_32/include/QtGui/qicon.h \
 		E:/qt/5.8/mingw53_32/include/QtCore/QString \
 		../source-code/CPU.h \
+		E:/qt/5.8/mingw53_32/include/QtCore/QThread \
+		E:/qt/5.8/mingw53_32/include/QtCore/qthread.h \
 		../source-code/global.h \
 		../source-code/simulator.h \
 		debug/moc_predefs.h \
@@ -346,6 +348,8 @@ debug/main.o: ../source-code/main.cpp ../source-code/simulator.h \
 		E:/qt/5.8/mingw53_32/include/QtGui/qicon.h \
 		E:/qt/5.8/mingw53_32/include/QtCore/QString \
 		../source-code/CPU.h \
+		E:/qt/5.8/mingw53_32/include/QtCore/QThread \
+		E:/qt/5.8/mingw53_32/include/QtCore/qthread.h \
 		../source-code/global.h \
 		E:/qt/5.8/mingw53_32/include/QtWidgets/QApplication \
 		E:/qt/5.8/mingw53_32/include/QtWidgets/qapplication.h \
@@ -463,8 +467,60 @@ debug/simulator.o: ../source-code/simulator.cpp ../source-code/simulator.h \
 		E:/qt/5.8/mingw53_32/include/QtGui/qicon.h \
 		E:/qt/5.8/mingw53_32/include/QtCore/QString \
 		../source-code/CPU.h \
+		E:/qt/5.8/mingw53_32/include/QtCore/QThread \
+		E:/qt/5.8/mingw53_32/include/QtCore/qthread.h \
 		../source-code/global.h \
 		ui_simulator.h \
+		E:/qt/5.8/mingw53_32/include/QtCore/QVariant \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/QAction \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/qaction.h \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/qactiongroup.h \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/QApplication \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/qapplication.h \
+		E:/qt/5.8/mingw53_32/include/QtCore/qcoreapplication.h \
+		E:/qt/5.8/mingw53_32/include/QtCore/qeventloop.h \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/qdesktopwidget.h \
+		E:/qt/5.8/mingw53_32/include/QtGui/qguiapplication.h \
+		E:/qt/5.8/mingw53_32/include/QtGui/qinputmethod.h \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/QButtonGroup \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/qbuttongroup.h \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/QGroupBox \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/qgroupbox.h \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/qframe.h \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/QHeaderView \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/qheaderview.h \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/qabstractitemview.h \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
+		E:/qt/5.8/mingw53_32/include/QtCore/qabstractitemmodel.h \
+		E:/qt/5.8/mingw53_32/include/QtCore/qitemselectionmodel.h \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/qstyleoption.h \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/qabstractspinbox.h \
+		E:/qt/5.8/mingw53_32/include/QtGui/qvalidator.h \
+		E:/qt/5.8/mingw53_32/include/QtCore/qregularexpression.h \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/qslider.h \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/qabstractslider.h \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/qstyle.h \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/qtabbar.h \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/qrubberband.h \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/QLabel \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/qlabel.h \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/QLineEdit \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/qlineedit.h \
+		E:/qt/5.8/mingw53_32/include/QtGui/qtextcursor.h \
+		E:/qt/5.8/mingw53_32/include/QtGui/qtextformat.h \
+		E:/qt/5.8/mingw53_32/include/QtGui/qpen.h \
+		E:/qt/5.8/mingw53_32/include/QtGui/qtextoption.h \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/QPushButton \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/qpushbutton.h \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/QSlider \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/QTabWidget \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/QTextBrowser \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/qtextbrowser.h \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/qtextedit.h \
+		E:/qt/5.8/mingw53_32/include/QtGui/qtextdocument.h \
+		E:/qt/5.8/mingw53_32/include/QtWidgets/QWidget \
 		E:/qt/5.8/mingw53_32/include/QtCore/QFile \
 		E:/qt/5.8/mingw53_32/include/QtWidgets/QMessageBox \
 		E:/qt/5.8/mingw53_32/include/QtWidgets/qmessagebox.h \

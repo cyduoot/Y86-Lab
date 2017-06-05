@@ -12,12 +12,12 @@ TARGET = Y86
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
+SOURCES = main.cpp\
         simulator.cpp \
     global.cpp
 
-HEADERS  += simulator.h \
+HEADERS  = simulator.h \
     CPU.h \
     global.h
 
-FORMS    += simulator.ui
+FORMS    = simulator.ui

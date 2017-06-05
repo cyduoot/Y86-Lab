@@ -196,6 +196,7 @@ Makefile: ../source-code/Y86.pro E:/qt/5.8/mingw53_32/mkspecs/win32-g++/qmake.co
 		E:/qt/5.8/mingw53_32/mkspecs/features/qt_config.prf \
 		E:/qt/5.8/mingw53_32/mkspecs/win32-g++/qmake.conf \
 		E:/qt/5.8/mingw53_32/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		E:/qt/5.8/mingw53_32/mkspecs/features/exclusive_builds.prf \
 		E:/qt/5.8/mingw53_32/mkspecs/features/toolchain.prf \
 		E:/qt/5.8/mingw53_32/mkspecs/features/default_pre.prf \
@@ -362,6 +363,7 @@ E:/qt/5.8/mingw53_32/mkspecs/features/qt_functions.prf:
 E:/qt/5.8/mingw53_32/mkspecs/features/qt_config.prf:
 E:/qt/5.8/mingw53_32/mkspecs/win32-g++/qmake.conf:
 E:/qt/5.8/mingw53_32/mkspecs/features/spec_post.prf:
+.qmake.stash:
 E:/qt/5.8/mingw53_32/mkspecs/features/exclusive_builds.prf:
 E:/qt/5.8/mingw53_32/mkspecs/features/toolchain.prf:
 E:/qt/5.8/mingw53_32/mkspecs/features/default_pre.prf:
