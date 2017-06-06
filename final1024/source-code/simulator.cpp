@@ -1,6 +1,5 @@
 #include "simulator.h"
 #include "ui_simulator.h"
-#include "CPU.h"
 #include "global.h"
 #include <bits/stdc++.h>
 #include <QString>

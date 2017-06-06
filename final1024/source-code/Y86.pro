@@ -14,7 +14,8 @@ TEMPLATE = app
 
 SOURCES = main.cpp\
         simulator.cpp \
-    global.cpp
+    global.cpp \
+    CPU.cpp
 
 HEADERS  = simulator.h \
     CPU.h \
