@@ -257,13 +257,6 @@ public:
         F_icode->setObjectName(QStringLiteral("F_icode"));
         F_icode->setGeometry(QRect(10, 20, 81, 31));
         Pipeline->addTab(Fetch, QString());
-        groupBox_5->raise();
-        groupBox_6->raise();
-        groupBox_7->raise();
-        groupBox_8->raise();
-        groupBox_9->raise();
-        groupBox_13->raise();
-        groupBox_14->raise();
         Decode = new QWidget();
         Decode->setObjectName(QStringLiteral("Decode"));
         groupBox_17 = new QGroupBox(Decode);
@@ -594,32 +587,7 @@ public:
         text_ebp = new QTextBrowser(groupBox_4);
         text_ebp->setObjectName(QStringLiteral("text_ebp"));
         text_ebp->setGeometry(QRect(370, 60, 91, 31));
-        label_ebx->raise();
-        label_eax->raise();
-        label_ecx->raise();
-        label_edx->raise();
-        text_eax->raise();
-        text_ecx->raise();
-        text_edx->raise();
-        text_ebx->raise();
-        text_esp->raise();
-        label_ebp->raise();
-        label_esi->raise();
-        label_edi->raise();
-        label_esp->raise();
-        label_esp->raise();
-        text_edi->raise();
-        text_esi->raise();
-        text_ebp->raise();
         Monitor->addTab(Main, QString());
-        Pipeline->raise();
-        groupBox->raise();
-        groupBox_2->raise();
-        groupBox_3->raise();
-        groupBox_4->raise();
-        label_edi->raise();
-        label_esi->raise();
-        label_esp->raise();
         Operation = new QWidget();
         Operation->setObjectName(QStringLiteral("Operation"));
         Pipeline_2 = new QTabWidget(Operation);
@@ -706,19 +674,6 @@ public:
         Code->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
         Code->setLineWrapMode(QTextEdit::NoWrap);
         MainWindow->setCentralWidget(centralWidget);
-        Button_reset->raise();
-        Button_next->raise();
-        Button_load->raise();
-        Monitor->raise();
-        path->raise();
-        Button_run->raise();
-        Button_stop->raise();
-        groupBox_10->raise();
-        path_code->raise();
-        Button_code->raise();
-        Button_clear->raise();
-        speed->raise();
-        groupBox_11->raise();
 
         retranslateUi(MainWindow);
 
@@ -732,7 +687,7 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", Q_NULLPTR));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "bingxing", Q_NULLPTR));
         Button_reset->setText(QApplication::translate("MainWindow", "Reset", Q_NULLPTR));
         Button_next->setText(QApplication::translate("MainWindow", "Next", Q_NULLPTR));
         Button_load->setText(QApplication::translate("MainWindow", "Load File", Q_NULLPTR));

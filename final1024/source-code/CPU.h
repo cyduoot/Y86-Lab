@@ -6,6 +6,7 @@
 #include <QThread>
 #include "global.h"
 #include <windows.h>
+#include <QDebug>
 using namespace std;
 
 #define IHALT 0
@@ -215,29 +216,29 @@ class CPU{
 
     void SelFwdA(){
         if (D_icode == ICALL || D_icode == IJXX) d_valA = D_valP;
-        else if (d_srcA == e_dstE){
+        else{
             while (E->isRunning())
                 Sleep(0);
-            d_valA = e_valE;
+            if (d_srcA == e_dstE)
+                d_valA = e_valE;
+            else if (d_srcA == M_dstM){
+                while (M->isRunning())
+                    Sleep(0);
+                d_valA = m_valM;
+            }
+            else if (d_srcA == M_dstE) d_valA = M_valE;
+            else if (d_srcA == W_dstM) d_valA = W_valM;
+            else if (d_srcA == W_dstE) d_valA = W_valE;
+            else d_valA = d_rvalA;
         }
-        else if (d_srcA == M_dstM){
-            while (M->isRunning())
-                Sleep(0);
-            d_valA = m_valM;
-        }
-        else if (d_srcA == M_dstE) d_valA = M_valE;
-        else if (d_srcA == W_dstM) d_valA = W_valM;
-        else if (d_srcA == W_dstE) d_valA = W_valE;
-        else d_valA = d_rvalA;
         D_op = D_op + "d_valA <- " + int2str(d_valA) + '\n';
     }
 
     void FwdB(){
-        if (d_srcB == e_dstE){
-            while (E->isRunning())
-                Sleep(0);
+        while (E->isRunning())
+            Sleep(0);
+        if (d_srcB == e_dstE)
             d_valB = e_valE;
-        }
         else if (d_srcB == M_dstM){
             while (M->isRunning())
                 Sleep(0);
@@ -583,21 +584,23 @@ class CPU{
         E -> start();
         D -> start();
         F -> start();
-        while (F->isRunning())
-            Sleep(0);
-        while (D->isRunning())
-            Sleep(0);
-        while (E->isRunning())
+        while (W->isRunning())
             Sleep(0);
         while (M->isRunning())
             Sleep(0);
-        while (W->isRunning())
+        while (E->isRunning())
+            Sleep(0);
+        while (D->isRunning())
+            Sleep(0);
+        while (F->isRunning())
             Sleep(0);
         delete F;
         delete D;
         delete E;
         delete M;
-        delete W;    }
+        delete W;
+        qDebug() << "done";
+    }
 };
 
 #endif

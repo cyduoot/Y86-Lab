@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>bingxing</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QPushButton" name="Button_reset">
@@ -246,14 +246,6 @@
          </property>
         </widget>
        </widget>
-       <zorder>groupBox_5</zorder>
-       <zorder>groupBox_6</zorder>
-       <zorder>groupBox_7</zorder>
-       <zorder>groupBox_8</zorder>
-       <zorder>groupBox_9</zorder>
-       <zorder>groupBox_13</zorder>
-       <zorder>groupBox_14</zorder>
-       <zorder>text_esp</zorder>
       </widget>
       <widget class="QWidget" name="Decode">
        <attribute name="title">
@@ -1504,32 +1496,7 @@ p, li { white-space: pre-wrap; }
         </rect>
        </property>
       </widget>
-      <zorder>label_ebx</zorder>
-      <zorder>label_eax</zorder>
-      <zorder>label_ecx</zorder>
-      <zorder>label_edx</zorder>
-      <zorder>text_eax</zorder>
-      <zorder>text_ecx</zorder>
-      <zorder>text_edx</zorder>
-      <zorder>text_ebx</zorder>
-      <zorder>text_esp</zorder>
-      <zorder>label_ebp</zorder>
-      <zorder>label_esi</zorder>
-      <zorder>label_edi</zorder>
-      <zorder>label_esp</zorder>
-      <zorder>label_esp</zorder>
-      <zorder>text_edi</zorder>
-      <zorder>text_esi</zorder>
-      <zorder>text_ebp</zorder>
      </widget>
-     <zorder>Pipeline</zorder>
-     <zorder>groupBox</zorder>
-     <zorder>groupBox_2</zorder>
-     <zorder>groupBox_3</zorder>
-     <zorder>groupBox_4</zorder>
-     <zorder>label_edi</zorder>
-     <zorder>label_esi</zorder>
-     <zorder>label_esp</zorder>
     </widget>
     <widget class="QWidget" name="Operation">
      <attribute name="title">
@@ -1811,19 +1778,6 @@ p, li { white-space: pre-wrap; }
      </property>
     </widget>
    </widget>
-   <zorder>Button_reset</zorder>
-   <zorder>Button_next</zorder>
-   <zorder>Button_load</zorder>
-   <zorder>Monitor</zorder>
-   <zorder>path</zorder>
-   <zorder>Button_run</zorder>
-   <zorder>Button_stop</zorder>
-   <zorder>groupBox_10</zorder>
-   <zorder>path_code</zorder>
-   <zorder>Button_code</zorder>
-   <zorder>Button_clear</zorder>
-   <zorder>speed</zorder>
-   <zorder>groupBox_11</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
