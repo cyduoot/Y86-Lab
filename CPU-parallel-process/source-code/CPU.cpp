@@ -19,12 +19,6 @@ CPU(){
 }
 
 void CPU :: prepare(){
-    F_op = "";
-    D_op = "";
-    E_op = "";
-    M_op = "";
-    W_op = "";
-
     memset(this, 0, sizeof(*this));
     F_predPC = code_head;
     D_icode = E_icode = M_icode = 1;
@@ -113,12 +107,6 @@ void CPU :: Control(){
 }
 
 void CPU :: Send(){
-    F_op = "";
-    D_op = "";
-    E_op = "";
-    M_op = "";
-    W_op = "";
-
     if (!F_stall && !F_bubble)
         F_predPC = f_predPC;
 
@@ -190,10 +178,108 @@ void CPU :: Send(){
     }
 }
 
+void CPU :: Fetch(){
+	sstream ss;
+	ss.clear();
+	ss << F_predPC << M_icode << M_Cnd << M_valA << W_icode << W_valM;
+//	qDebug() << ss;
+	string Output;
+	ss >> Output;
+//	qDebug() << Output;
+	F_done = 0;
+	F -> write(ss.toUtf8());
+}
+
+void CPU :: Decode(){
+	sstream ss;
+	ss.clear();
+	ss << D_stat << D_icode << D_ifun << D_rA << D_rB << D_valC << D_valP;
+	ss << M_dstM << M_dstE << M_valE << W_dstM << W_valM << W_dstE << W_valE;
+	string Output;
+	ss >> Output;
+	D_done = 0;
+	D -> write(ss.toUtf8());
+}
+
+void CPU :: Execute(){
+	
+}
+
+void CPU :: Memory(){
+	
+}
+
+void CPU :: Write(){
+	
+}
+
+void CPU :: F_ret(){
+	sstream ss;
+	ss.clear();
+	ss << F -> readAllStandardOutput();
+	ss >> ch;
+	if (ch == '?'){
+		int head, len, data;
+		bool imem_error;
+		ss >> head >> len;
+		mem_read(head, len, data, imem_error);
+		ss.clear();
+		ss << data;
+		if (imem_error) ss  << 1;
+		else ss << 0;
+		F -> write(ss.toUtf8());
+	}
+	else if (ch == '*'){
+		ss >> f_stat >> f_icode >> f_ifun >> f_rA >> f_rB >> f_valC >> f_valP >> f_PC >> f_predPC;
+	}
+	else
+		qDebug << "F Error :" << ch;
+}
+
+void CPU :: D_ret(){
+	sstream ss;
+	ss.clear();
+	ss << D -> readAllStandardOutput();
+	ss >> ch;
+	if (ch == '?'){
+		int src;
+		ss >> src;
+		int x = get_Register(src);
+		ss.clear();
+		ss << x;
+		D -> write(ss.toUtf8());
+	}
+	else if (ch == '*'){
+		
+	}
+	else
+		qDebug << "D Error :" << ch;
+}
+
+void CPU :: Forward_Deal(){
+	e_set_cc = (E_icode == IOPL)
+		&& !(W_stat == SADR || W_stat == SINS || W_stat == SHLT)
+		&& !(M_stat == SADR || M_stat == SINS || M_stat == SHLT)
+		&& !(m_stat == SADR || m_stat == SINS || m_stat == SHLT);
+	
+	if (e_set_cc)
+		
+	
+	if (D_marked_A_e && d_srcA == e_dstE)
+		d_valA = e_valE;
+	else if (D_marked_A_m && d_srcA == M_dstM)
+		d_valA = m_valM;
+	if (D_marked_B_e && d_srcB == e_dstE)
+		d_valB = e_valE;
+	else if (D_marked_B_m && d_srcA == M_dstM)
+		d_valA = m_valM;
+}
+
 void CPU :: FFF(){
-/*	Fetch();
+	Fetch();
 	Decode();
 	Execute();
 	Memory();
-	Write();*/
+	Write();
+	Forward_Deal();
 }

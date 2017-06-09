@@ -41,7 +41,7 @@ void ReadData(){
 }
 
 void WriteData(){
-	printf("%d\n", Stat);
+	printf("* %d\n", Stat);
 	cout << W_op << endl;
 	fflush(stdout);
 }

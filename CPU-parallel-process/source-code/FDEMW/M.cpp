@@ -45,7 +45,7 @@ void ReadData(){
 }
 
 void WriteData(){
-	printf("%d %d %d %d %d %d\n", m_stat, m_icode, m_valE, m_valM, m_dstE, m_dstM);
+	printf("* %d %d %d %d %d %d\n", m_stat, m_icode, m_valE, m_valM, m_dstE, m_dstM);
 	cout << M_op << endl;
 	fflush(stdout);
 }

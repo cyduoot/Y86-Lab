@@ -45,7 +45,7 @@ void ReadData(){
 }
 
 void WriteData(){
-	printf("%d %d %d %d %d %d %d %d %d\n", f_stat, f_icode, f_ifun, f_rA, f_rB, f_valC, f_valP, f_PC, f_predPC);
+	printf("* %d %d %d %d %d %d %d %d %d\n", f_stat, f_icode, f_ifun, f_rA, f_rB, f_valC, f_valP, f_PC, f_predPC);
 	cout << F_op << endl;
 	fflush(stdout);
 }

@@ -3,7 +3,7 @@
 
 #include <bits/stdc++.h>
 #include <QString>
-#include <QThread>
+#include <QProcess>
 #include "global.h"
 #include <windows.h>
 #include <QDebug>

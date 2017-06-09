@@ -36,7 +36,7 @@ int M_dstM, M_dstE, M_valE, W_dstM, W_valM, W_dstE, W_valE;
 
 int d_stat, d_icode, d_ifun, d_valC, d_valA, d_valB, d_dstE, d_dstM, d_srcA, d_srcB, d_rvalA, d_rvalB;
 
-int marked_A_e, marked_A_m, marked_B_e, marked_B_m;
+int D_marked_A_e, D_marked_A_m, D_marked_B_e, D_marked_B_m;
 
 string D_op;
 
@@ -46,8 +46,8 @@ void ReadData(){
 }
 
 void WriteData(){
-	printf("%d %d %d %d %d %d %d %d %d %d %d %d\n", d_stat, d_icode, d_ifun, d_valC, d_valA, d_valB, d_dstE, d_dstM, d_srcA, d_srcB, d_rvalA, d_rvalB);
-	printf("%d %d %d %d\n", marked_A_e, marked_A_m, marked_B_e, marked_B_m);
+	printf("* %d %d %d %d %d %d %d %d %d %d %d %d ", d_stat, d_icode, d_ifun, d_valC, d_valA, d_valB, d_dstE, d_dstM, d_srcA, d_srcB, d_rvalA, d_rvalB);
+	printf("%d %d %d %d\n", D_marked_A_e, D_marked_A_m, D_marked_B_e, D_marked_B_m);
 	cout << D_op << endl;
 	fflush(stdout);
 }
@@ -86,17 +86,13 @@ int get_Register(int src){
 }
 
 void SelFwdA(){
-	marked_A_e = 0;
-	marked_A_m = 0;
+	D_marked_A_e = 0;
+	D_marked_A_m = 0;
     if (D_icode == ICALL || D_icode == IJXX) d_valA = D_valP;
     else{
-		marked_A_e = 1;
-		d_valA = 0;
-        if (d_srcA == M_dstM){
-			marked_A_m = 1;
-            d_valA = 0;
-        }
-        else if (d_srcA == M_dstE) d_valA = M_valE;
+		D_marked_A_e = 1;
+		D_marked_A_m = 1;
+        if (d_srcA == M_dstE) d_valA = M_valE;
         else if (d_srcA == W_dstM) d_valA = W_valM;
         else if (d_srcA == W_dstE) d_valA = W_valE;
         else d_valA = d_rvalA;
@@ -105,13 +101,9 @@ void SelFwdA(){
 }
 
 void FwdB(){
-	marked_B_e = 1;
-	marked_B_m = 0;
-    if (d_srcB == M_dstM){
-		marked_B_m = 1;
-        d_valB = 0;
-    }
-    else if (d_srcB == M_dstE) d_valB = M_valE;
+	D_marked_B_e = 1;
+	D_marked_B_m = 1;
+    if (d_srcB == M_dstE) d_valB = M_valE;
     else if (d_srcB == W_dstM) d_valB = W_valM;
     else if (d_srcB == W_dstE) d_valB = W_valE;
     else d_valB = d_rvalB;
