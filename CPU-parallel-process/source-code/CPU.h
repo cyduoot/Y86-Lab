@@ -7,7 +7,8 @@
 #include "global.h"
 #include <windows.h>
 #include <QDebug>
-using namespace std;
+#include <QObject>
+#include <QMainWindow>
 
 #define IHALT 0
 #define INOP 1
@@ -36,10 +37,13 @@ using namespace std;
 
 #define SBUB 0
 
-class CPU;
-
-class CPU{
+class CPU : public QObject{
+    Q_OBJECT
     public:
+
+    bool _ZF, _OF, _SF, _CF;
+    bool F_done, D_done, E_done, M_done, W_done;
+    bool D_marked_A_e, D_marked_A_m, D_marked_B_e, D_marked_B_m;
 
     char bin_code[MAXLEN];
     int circle_time, speed;
@@ -72,13 +76,21 @@ class CPU{
     int W_stat, W_icode, W_valE, W_valM, W_dstE, W_dstM;
     bool W_stall, W_bubble;
 
+    QProcess *F, *D, *E, *M, *W;
+
     void prepare();
+
+    std::string int2str(int x);
 
     void mem_read(int head, int len, int &data, bool &imem_error);
 
     void mem_write(int head, int len, int data, bool &imem_error);
 
+    int get_Register(int src);
+
     void read_in(QString path);
+
+    void cond(int &e_Cnd, bool ZF, bool SF, bool OF, bool CF);
 
     void F_Control();
 
@@ -94,9 +106,19 @@ class CPU{
 
     void Send();
 
-    void FFF();
+    void Fetch();
 
-    QProcess &F, &D, &E, &M, &W;
+    void Decode();
+
+    void Execute();
+
+    void Memory();
+
+    void Write();
+
+    void Forward_Deal();
+
+    void FFF();
 
     signals:
     public slots:

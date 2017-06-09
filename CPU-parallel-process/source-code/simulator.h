@@ -15,6 +15,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    CPU *s;
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
@@ -50,7 +51,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    CPU s;
 };
 
 #endif // SIMULATOR_H

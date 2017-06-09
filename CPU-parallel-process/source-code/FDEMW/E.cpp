@@ -57,7 +57,7 @@ void WriteData(){
 	s = SF;
 	o = OF;
 	c = CF;
-	printf("* %d %d %d %d %d %d %d %d %d %d", e_stat, e_icode, e_Cnd, e_valE, e_valA, e_dstE, e_dstM, e_aluA, e_aluB, e_alufun);
+	printf("* %d %d %d %d %d %d %d %d %d %d ", e_stat, e_icode, e_Cnd, e_valE, e_valA, e_dstE, e_dstM, e_aluA, e_aluB, e_alufun);
 	printf("%d %d %d %d\n", z, s, o, c);
 	cout << E_op << endl;
 	fflush(stdout);
@@ -114,6 +114,7 @@ void ALU(int alua, int alub, int alufun, int &valE, bool setCC, bool &ZF, bool &
     E_op = E_op + s + '\n';
 
     if (setCC)
+        setConditionCode(alua, alub, valE, alufun, ZF, SF, OF, CF);
  }
 
 void cond(int &e_Cnd, bool ZF, bool SF, bool OF, bool CF){

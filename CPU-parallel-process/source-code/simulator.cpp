@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->Button_stop, &QPushButton::clicked, this, &MainWindow::stop);
     connect(ui->Button_code, &QPushButton::clicked, this, &MainWindow::load_code);
     connect(ui->Button_clear, &QPushButton::clicked, this, &MainWindow::clear);
+    s = new CPU;
 }
 
 QString MainWindow::get_reg(int x)
@@ -64,14 +65,14 @@ void MainWindow::load_code()
 
 void MainWindow::refresh_register()
 {
-    ui->text_eax->setText(getHex(s.Reg[0]));
-    ui->text_ecx->setText(getHex(s.Reg[1]));
-    ui->text_edx->setText(getHex(s.Reg[2]));
-    ui->text_ebx->setText(getHex(s.Reg[3]));
-    ui->text_esi->setText(getHex(s.Reg[4]));
-    ui->text_edi->setText(getHex(s.Reg[5]));
-    ui->text_esp->setText(getHex(s.Reg[6]));
-    ui->text_ebp->setText(getHex(s.Reg[7]));
+    ui->text_eax->setText(getHex(s->Reg[0]));
+    ui->text_ecx->setText(getHex(s->Reg[1]));
+    ui->text_edx->setText(getHex(s->Reg[2]));
+    ui->text_ebx->setText(getHex(s->Reg[3]));
+    ui->text_esi->setText(getHex(s->Reg[4]));
+    ui->text_edi->setText(getHex(s->Reg[5]));
+    ui->text_esp->setText(getHex(s->Reg[6]));
+    ui->text_ebp->setText(getHex(s->Reg[7]));
 }
 
 void MainWindow::refresh_memory()
@@ -87,18 +88,18 @@ void MainWindow::refresh_memory()
 
 void MainWindow::clock()
 {
-    s.Control();
-    s.Send();
-    s.FFF();
-    s.circle_time++;
+    s->Control();
+    s->Send();
+    s->FFF();
+    s->circle_time++;
 }
 
 void MainWindow::init()
 {
-    s.prepare();
+    s->prepare();
     ui->speed->setValue(50);
     ui->nowspeed->setNum(50);
-    s.speed = 50;
+    s->speed = 50;
     refresh_register();
     refresh_all();
     refresh_memory();
@@ -110,7 +111,7 @@ void MainWindow::load()
     QString file_path;
     init();
     file_path = ui->path->text();
-    s.read_in(file_path);
+    s->read_in(file_path);
     refresh_register();
     refresh_all();
     refresh_memory();
@@ -118,7 +119,7 @@ void MainWindow::load()
 
 void MainWindow::next()
 {
-    if (s.Stat != SAOK)
+    if (s->Stat != SAOK)
         QMessageBox::warning(this,"Warnning","Program is not running!",QMessageBox::Yes);
     else
     {
@@ -132,17 +133,17 @@ void MainWindow::next()
 
 void MainWindow::run()
 {
-    s.running = true;
-    while (s.running)
+    s->running = true;
+    while (s->running)
     {
         QElapsedTimer t;
         t.start();
-        while(t.elapsed()<1000/s.speed)
+        while(t.elapsed()<1000/s->speed)
             QCoreApplication::processEvents();
-        if (s.Stat != SAOK)
+        if (s->Stat != SAOK)
         {
             QMessageBox::warning(this,"Warnning","Program is not running!",QMessageBox::Yes);
-            s.running = false;
+            s->running = false;
             return;
         }
         clock();
@@ -155,7 +156,7 @@ void MainWindow::run()
 
 void MainWindow::stop()
 {
-    s.running = false;
+    s->running = false;
 }
 
 QString MainWindow::getHex(int x) {
@@ -243,63 +244,63 @@ QString MainWindow::getIns(int x)
 
 void MainWindow::refresh_all()
 {
-    ui->STAT->setText(getState(s.Stat));
-    ui->cycle->setText(getDec(s.circle_time));
-    ui->ZF->setText(getDec(s.ZF));
-    ui->OF->setText(getDec(s.OF));
-    ui->SF->setText(getDec(s.SF));
-    ui->CF->setText(getDec(s.CF));
+    ui->STAT->setText(getState(s->Stat));
+    ui->cycle->setText(getDec(s->circle_time));
+    ui->ZF->setText(getDec(s->ZF));
+    ui->OF->setText(getDec(s->OF));
+    ui->SF->setText(getDec(s->SF));
+    ui->CF->setText(getDec(s->CF));
     //ui->cycle->setText(QVariant(Current_cycle).toString());
 
-    ui->F_STAT->setText(getState(s.f_stat));
-    ui->F_predPC->setText(getHex(s.F_predPC));
-    ui->f_predPC->setText(getHex(s.f_predPC));
-    ui->F_ifun->setText(getHexI(s.f_ifun));
-    ui->F_icode->setText(getIns(s.f_icode));
-    ui->F_stall->setText(s.F_stall?"true":"false");
-    ui->F_bubble->setText(s.F_bubble?"true":"false");
+    ui->F_STAT->setText(getState(s->f_stat));
+    ui->F_predPC->setText(getHex(s->F_predPC));
+    ui->f_predPC->setText(getHex(s->f_predPC));
+    ui->F_ifun->setText(getHexI(s->f_ifun));
+    ui->F_icode->setText(getIns(s->f_icode));
+    ui->F_stall->setText(s->F_stall?"true":"false");
+    ui->F_bubble->setText(s->F_bubble?"true":"false");
 
-    ui->D_STAT->setText(getState(s.D_stat));
-    ui->D_icode->setText(getIns(s.D_icode));
-    ui->D_ifun->setText(getHexI(s.D_ifun));
-    ui->D_rA->setText(get_reg(s.D_rA));
-    ui->D_rB->setText(get_reg(s.D_rB));
-    ui->D_valC->setText(getHex(s.D_valC));
-    ui->D_valP->setText(getHex(s.D_valP));
-    ui->D_stall->setText(s.D_stall?"true":"false");
-    ui->D_bubble->setText(s.D_bubble?"true":"false");
+    ui->D_STAT->setText(getState(s->D_stat));
+    ui->D_icode->setText(getIns(s->D_icode));
+    ui->D_ifun->setText(getHexI(s->D_ifun));
+    ui->D_rA->setText(get_reg(s->D_rA));
+    ui->D_rB->setText(get_reg(s->D_rB));
+    ui->D_valC->setText(getHex(s->D_valC));
+    ui->D_valP->setText(getHex(s->D_valP));
+    ui->D_stall->setText(s->D_stall?"true":"false");
+    ui->D_bubble->setText(s->D_bubble?"true":"false");
 
-    ui->E_STAT->setText(getState(s.E_stat));
-    ui->E_icode->setText(getIns(s.E_icode));
-    ui->E_ifun->setText(getHexI(s.E_ifun));
-    ui->E_valC->setText(getHex(s.E_valC));
-    ui->E_valA->setText(getHex(s.E_valA));
-    ui->E_valB->setText(getHex(s.E_valB));
-    ui->E_srcA->setText(get_reg(s.E_srcA));
-    ui->E_srcB->setText(get_reg(s.E_srcB));
-    ui->E_dstE->setText(get_reg(s.E_dstE));
-    ui->E_dstM->setText(get_reg(s.E_dstM));
-    ui->E_stall->setText(s.E_stall?"true":"false");
-    ui->E_bubble->setText(s.E_bubble?"true":"false");
+    ui->E_STAT->setText(getState(s->E_stat));
+    ui->E_icode->setText(getIns(s->E_icode));
+    ui->E_ifun->setText(getHexI(s->E_ifun));
+    ui->E_valC->setText(getHex(s->E_valC));
+    ui->E_valA->setText(getHex(s->E_valA));
+    ui->E_valB->setText(getHex(s->E_valB));
+    ui->E_srcA->setText(get_reg(s->E_srcA));
+    ui->E_srcB->setText(get_reg(s->E_srcB));
+    ui->E_dstE->setText(get_reg(s->E_dstE));
+    ui->E_dstM->setText(get_reg(s->E_dstM));
+    ui->E_stall->setText(s->E_stall?"true":"false");
+    ui->E_bubble->setText(s->E_bubble?"true":"false");
 
-    ui->M_STAT->setText(getState(s.M_stat));
-    ui->M_icode->setText(getIns(s.M_icode));
-    ui->M_Cnd->setText((s.M_Cnd?"true":"false"));
-    ui->M_valE->setText(getHex(s.M_valE));
-    ui->M_valA->setText(getHex(s.M_valA));
-    ui->M_dstE->setText(get_reg(s.M_dstE));
-    ui->M_dstM->setText(get_reg(s.M_dstM));
-    ui->M_stall->setText(s.M_stall?"true":"false");
-    ui->M_bubble->setText(s.M_bubble?"true":"false");
+    ui->M_STAT->setText(getState(s->M_stat));
+    ui->M_icode->setText(getIns(s->M_icode));
+    ui->M_Cnd->setText((s->M_Cnd?"true":"false"));
+    ui->M_valE->setText(getHex(s->M_valE));
+    ui->M_valA->setText(getHex(s->M_valA));
+    ui->M_dstE->setText(get_reg(s->M_dstE));
+    ui->M_dstM->setText(get_reg(s->M_dstM));
+    ui->M_stall->setText(s->M_stall?"true":"false");
+    ui->M_bubble->setText(s->M_bubble?"true":"false");
 
-    ui->W_STAT->setText(getState(s.W_stat));
-    ui->W_icode->setText(getIns(s.W_icode));
-    ui->W_valE->setText(getHex(s.W_valE));
-    ui->W_valM->setText(getHex(s.W_valM));
-    ui->W_dstE->setText(get_reg(s.W_dstE));
-    ui->W_dstM->setText(get_reg(s.W_dstM));
-    ui->W_stall->setText(s.W_stall?"true":"false");
-    ui->W_bubble->setText(s.W_bubble?"true":"false");
+    ui->W_STAT->setText(getState(s->W_stat));
+    ui->W_icode->setText(getIns(s->W_icode));
+    ui->W_valE->setText(getHex(s->W_valE));
+    ui->W_valM->setText(getHex(s->W_valM));
+    ui->W_dstE->setText(get_reg(s->W_dstE));
+    ui->W_dstM->setText(get_reg(s->W_dstM));
+    ui->W_stall->setText(s->W_stall?"true":"false");
+    ui->W_bubble->setText(s->W_bubble?"true":"false");
 }
 
 void MainWindow::refresh_operation()
@@ -324,5 +325,5 @@ MainWindow::~MainWindow()
 void MainWindow::on_speed_sliderMoved(int position)
 {
     ui->nowspeed->setNum(position);
-    s.speed = position;
+    s->speed = position;
 }
