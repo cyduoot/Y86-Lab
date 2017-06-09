@@ -3,10 +3,7 @@
 
 #include <bits/stdc++.h>
 #include <QString>
-#include <QThread>
 #include "global.h"
-#include <windows.h>
-#include <QDebug>
 using namespace std;
 
 #define IHALT 0
@@ -35,35 +32,6 @@ using namespace std;
 #define SHLT 4
 
 #define SBUB 0
-
-class CPU;
-
-extern CPU *CPU_Target;
-
-class Process_F : public QThread{
-    public:
-    void run();
-};
-
-class Process_D : public QThread{
-    public:
-    void run();
-};
-
-class Process_E : public QThread{
-    public:
-    void run();
-};
-
-class Process_M : public QThread{
-    public:
-    void run();
-};
-
-class Process_W : public QThread{
-    public:
-    void run();
-};
 
 
 class CPU{
@@ -99,12 +67,6 @@ class CPU{
 
     int W_stat, W_icode, W_valE, W_valM, W_dstE, W_dstM;
     bool W_stall, W_bubble;
-
-    Process_F *F;
-    Process_D *D;
-    Process_E *E;
-    Process_M *M;
-    Process_W *W;
 
     string int2str(int x){
         string s;
@@ -216,34 +178,18 @@ class CPU{
 
     void SelFwdA(){
         if (D_icode == ICALL || D_icode == IJXX) d_valA = D_valP;
-        else{
-            while (E->isRunning())
-                Sleep(0);
-            if (d_srcA == e_dstE)
-                d_valA = e_valE;
-            else if (d_srcA == M_dstM){
-                while (M->isRunning())
-                    Sleep(0);
-                d_valA = m_valM;
-            }
-            else if (d_srcA == M_dstE) d_valA = M_valE;
-            else if (d_srcA == W_dstM) d_valA = W_valM;
-            else if (d_srcA == W_dstE) d_valA = W_valE;
-            else d_valA = d_rvalA;
-        }
+        else if (d_srcA == e_dstE) d_valA = e_valE;
+        else if (d_srcA == M_dstM) d_valA = m_valM;
+        else if (d_srcA == M_dstE) d_valA = M_valE;
+        else if (d_srcA == W_dstM) d_valA = W_valM;
+        else if (d_srcA == W_dstE) d_valA = W_valE;
+        else d_valA = d_rvalA;
         D_op = D_op + "d_valA <- " + int2str(d_valA) + '\n';
     }
 
     void FwdB(){
-        while (E->isRunning())
-            Sleep(0);
-        if (d_srcB == e_dstE)
-            d_valB = e_valE;
-        else if (d_srcB == M_dstM){
-            while (M->isRunning())
-                Sleep(0);
-            d_valB = m_valM;
-        }
+        if (d_srcB == e_dstE) d_valB = e_valE;
+        else if (d_srcB == M_dstM) d_valB = m_valM;
         else if (d_srcB == M_dstE) d_valB = M_valE;
         else if (d_srcB == W_dstM) d_valB = W_valM;
         else if (d_srcB == W_dstE) d_valB = W_valE;
@@ -506,14 +452,9 @@ class CPU{
         if (E_icode == IOPL) e_alufun = E_ifun;
         else e_alufun = ALUADD;
 
-        e_set_cc = (E_icode == IOPL)
-                    && !(W_stat == SADR || W_stat == SINS || W_stat == SHLT);
-
-        if (e_set_cc){
-            while (M->isRunning())
-                Sleep(0);
-            e_set_cc &= !(m_stat == SADR || m_stat == SINS || m_stat == SHLT);
-        }
+        e_set_cc = (E_icode == IOPL) &&
+                    !(m_stat == SADR || m_stat == SINS || m_stat == SHLT) &&
+                    !(W_stat == SADR || W_stat == SINS || W_stat == SHLT);
 
         if (need_use_ALU)
             ALU(e_aluA, e_aluB, e_alufun, e_valE, e_set_cc, ZF, SF, OF, CF);
@@ -571,37 +512,6 @@ class CPU{
         set_Register(W_dstE, W_valE);
         set_Register(W_dstM, W_valM);
     }
-
-    void FFF(){
-        CPU_Target = this;
-        F = new Process_F();
-        D = new Process_D();
-        E = new Process_E();
-        M = new Process_M();
-        W = new Process_W();
-        W -> start();
-        M -> start();
-        E -> start();
-        D -> start();
-        F -> start();
-        while (W->isRunning())
-            Sleep(0);
-        while (M->isRunning())
-            Sleep(0);
-        while (E->isRunning())
-            Sleep(0);
-        while (D->isRunning())
-            Sleep(0);
-        while (F->isRunning())
-            Sleep(0);
-        delete F;
-        delete D;
-        delete E;
-        delete M;
-        delete W;
-        qDebug() << "done";
-    }
 };
 
 #endif
-

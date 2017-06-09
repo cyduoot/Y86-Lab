@@ -3,8 +3,8 @@
 
 #include <QMainWindow>
 #include <QString>
-#include "global.h"
 #include "CPU.h"
+#include "global.h"
 
 namespace Ui {
 class MainWindow;
