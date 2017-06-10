@@ -121,9 +121,13 @@ class CPU{
 
     void Split(int f_PC, int &f_a, int &f_b, bool &imem_error);
 
-    void SelFwdA();
+    void SelFwdA_serial();
 
-    void FwdB();
+    void FwdB_serial();
+
+    void SelFwdA_thread();
+
+    void FwdB_thread();
 
     int get_Register(int src);
 

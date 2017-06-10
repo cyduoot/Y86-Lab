@@ -13,13 +13,14 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QGroupBox>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QSlider>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QWidget>
@@ -161,32 +162,21 @@ public:
     QTextBrowser *text_edi;
     QTextBrowser *text_esi;
     QTextBrowser *text_ebp;
-    QWidget *Operation;
-    QTabWidget *Pipeline_2;
-    QWidget *Fetch_2;
-    QTextBrowser *f_opt;
-    QWidget *Decode_2;
-    QTextBrowser *d_opt;
-    QWidget *Execute_2;
-    QTextBrowser *e_opt;
-    QWidget *Memory_2;
-    QTextBrowser *m_opt;
-    QWidget *Write_back_2;
-    QTextBrowser *w_opt;
     QWidget *Memory1;
     QTextBrowser *memorymonitor;
-    QLineEdit *path;
     QPushButton *Button_run;
     QPushButton *Button_stop;
-    QGroupBox *groupBox_10;
-    QSlider *speed;
-    QLabel *label;
-    QLabel *nowspeed;
-    QLineEdit *path_code;
     QPushButton *Button_code;
     QPushButton *Button_clear;
     QGroupBox *groupBox_11;
     QTextBrowser *Code;
+    QComboBox *type;
+    QPushButton *Button_next_2;
+    QLabel *label;
+    QWidget *horizontalLayoutWidget;
+    QHBoxLayout *horizontalLayout;
+    QLineEdit *runtime;
+    QLabel *label_2;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -203,7 +193,7 @@ public:
         Button_next->setGeometry(QRect(140, 590, 91, 31));
         Button_load = new QPushButton(centralWidget);
         Button_load->setObjectName(QStringLiteral("Button_load"));
-        Button_load->setGeometry(QRect(40, 630, 91, 31));
+        Button_load->setGeometry(QRect(140, 550, 91, 31));
         Monitor = new QTabWidget(centralWidget);
         Monitor->setObjectName(QStringLiteral("Monitor"));
         Monitor->setGeometry(QRect(440, 20, 501, 671));
@@ -588,81 +578,24 @@ public:
         text_ebp->setObjectName(QStringLiteral("text_ebp"));
         text_ebp->setGeometry(QRect(370, 60, 91, 31));
         Monitor->addTab(Main, QString());
-        Operation = new QWidget();
-        Operation->setObjectName(QStringLiteral("Operation"));
-        Pipeline_2 = new QTabWidget(Operation);
-        Pipeline_2->setObjectName(QStringLiteral("Pipeline_2"));
-        Pipeline_2->setGeometry(QRect(20, 20, 461, 251));
-        Fetch_2 = new QWidget();
-        Fetch_2->setObjectName(QStringLiteral("Fetch_2"));
-        f_opt = new QTextBrowser(Fetch_2);
-        f_opt->setObjectName(QStringLiteral("f_opt"));
-        f_opt->setGeometry(QRect(10, 40, 431, 171));
-        Pipeline_2->addTab(Fetch_2, QString());
-        Decode_2 = new QWidget();
-        Decode_2->setObjectName(QStringLiteral("Decode_2"));
-        d_opt = new QTextBrowser(Decode_2);
-        d_opt->setObjectName(QStringLiteral("d_opt"));
-        d_opt->setGeometry(QRect(10, 40, 431, 171));
-        Pipeline_2->addTab(Decode_2, QString());
-        Execute_2 = new QWidget();
-        Execute_2->setObjectName(QStringLiteral("Execute_2"));
-        e_opt = new QTextBrowser(Execute_2);
-        e_opt->setObjectName(QStringLiteral("e_opt"));
-        e_opt->setGeometry(QRect(10, 40, 431, 171));
-        Pipeline_2->addTab(Execute_2, QString());
-        Memory_2 = new QWidget();
-        Memory_2->setObjectName(QStringLiteral("Memory_2"));
-        m_opt = new QTextBrowser(Memory_2);
-        m_opt->setObjectName(QStringLiteral("m_opt"));
-        m_opt->setGeometry(QRect(10, 40, 431, 171));
-        Pipeline_2->addTab(Memory_2, QString());
-        Write_back_2 = new QWidget();
-        Write_back_2->setObjectName(QStringLiteral("Write_back_2"));
-        w_opt = new QTextBrowser(Write_back_2);
-        w_opt->setObjectName(QStringLiteral("w_opt"));
-        w_opt->setGeometry(QRect(10, 40, 431, 171));
-        Pipeline_2->addTab(Write_back_2, QString());
-        Monitor->addTab(Operation, QString());
         Memory1 = new QWidget();
         Memory1->setObjectName(QStringLiteral("Memory1"));
         memorymonitor = new QTextBrowser(Memory1);
         memorymonitor->setObjectName(QStringLiteral("memorymonitor"));
         memorymonitor->setGeometry(QRect(30, 20, 321, 381));
         Monitor->addTab(Memory1, QString());
-        path = new QLineEdit(centralWidget);
-        path->setObjectName(QStringLiteral("path"));
-        path->setGeometry(QRect(140, 630, 141, 31));
         Button_run = new QPushButton(centralWidget);
         Button_run->setObjectName(QStringLiteral("Button_run"));
         Button_run->setGeometry(QRect(240, 590, 91, 31));
         Button_stop = new QPushButton(centralWidget);
         Button_stop->setObjectName(QStringLiteral("Button_stop"));
         Button_stop->setGeometry(QRect(340, 590, 91, 31));
-        groupBox_10 = new QGroupBox(centralWidget);
-        groupBox_10->setObjectName(QStringLiteral("groupBox_10"));
-        groupBox_10->setGeometry(QRect(290, 620, 141, 71));
-        speed = new QSlider(groupBox_10);
-        speed->setObjectName(QStringLiteral("speed"));
-        speed->setGeometry(QRect(20, 20, 101, 21));
-        speed->setMinimum(1);
-        speed->setValue(50);
-        speed->setOrientation(Qt::Horizontal);
-        label = new QLabel(groupBox_10);
-        label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(100, 50, 16, 16));
-        nowspeed = new QLabel(groupBox_10);
-        nowspeed->setObjectName(QStringLiteral("nowspeed"));
-        nowspeed->setGeometry(QRect(40, 50, 54, 12));
-        path_code = new QLineEdit(centralWidget);
-        path_code->setObjectName(QStringLiteral("path_code"));
-        path_code->setGeometry(QRect(240, 550, 141, 31));
         Button_code = new QPushButton(centralWidget);
         Button_code->setObjectName(QStringLiteral("Button_code"));
         Button_code->setGeometry(QRect(40, 550, 91, 31));
         Button_clear = new QPushButton(centralWidget);
         Button_clear->setObjectName(QStringLiteral("Button_clear"));
-        Button_clear->setGeometry(QRect(140, 550, 91, 31));
+        Button_clear->setGeometry(QRect(240, 550, 91, 31));
         groupBox_11 = new QGroupBox(centralWidget);
         groupBox_11->setObjectName(QStringLiteral("groupBox_11"));
         groupBox_11->setGeometry(QRect(10, 10, 411, 531));
@@ -673,13 +606,39 @@ public:
         Code->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         Code->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
         Code->setLineWrapMode(QTextEdit::NoWrap);
+        type = new QComboBox(centralWidget);
+        type->setObjectName(QStringLiteral("type"));
+        type->setGeometry(QRect(40, 640, 91, 31));
+        Button_next_2 = new QPushButton(centralWidget);
+        Button_next_2->setObjectName(QStringLiteral("Button_next_2"));
+        Button_next_2->setGeometry(QRect(140, 640, 91, 31));
+        label = new QLabel(centralWidget);
+        label->setObjectName(QStringLiteral("label"));
+        label->setGeometry(QRect(260, 630, 81, 16));
+        horizontalLayoutWidget = new QWidget(centralWidget);
+        horizontalLayoutWidget->setObjectName(QStringLiteral("horizontalLayoutWidget"));
+        horizontalLayoutWidget->setGeometry(QRect(260, 650, 160, 21));
+        horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        runtime = new QLineEdit(horizontalLayoutWidget);
+        runtime->setObjectName(QStringLiteral("runtime"));
+
+        horizontalLayout->addWidget(runtime);
+
+        label_2 = new QLabel(horizontalLayoutWidget);
+        label_2->setObjectName(QStringLiteral("label_2"));
+
+        horizontalLayout->addWidget(label_2);
+
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
 
         Monitor->setCurrentIndex(0);
         Pipeline->setCurrentIndex(0);
-        Pipeline_2->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -763,23 +722,21 @@ public:
         label_edi->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:18pt;\">%edi</span></p></body></html>", Q_NULLPTR));
         label_esp->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:18pt;\">%esp</span></p></body></html>", Q_NULLPTR));
         Monitor->setTabText(Monitor->indexOf(Main), QApplication::translate("MainWindow", "Main", Q_NULLPTR));
-        Pipeline_2->setTabText(Pipeline_2->indexOf(Fetch_2), QApplication::translate("MainWindow", "Fetch", Q_NULLPTR));
-        Pipeline_2->setTabText(Pipeline_2->indexOf(Decode_2), QApplication::translate("MainWindow", "Decode", Q_NULLPTR));
-        Pipeline_2->setTabText(Pipeline_2->indexOf(Execute_2), QApplication::translate("MainWindow", "Execute", Q_NULLPTR));
-        Pipeline_2->setTabText(Pipeline_2->indexOf(Memory_2), QApplication::translate("MainWindow", "Memory", Q_NULLPTR));
-        Pipeline_2->setTabText(Pipeline_2->indexOf(Write_back_2), QApplication::translate("MainWindow", "Write_back", Q_NULLPTR));
-        Monitor->setTabText(Monitor->indexOf(Operation), QApplication::translate("MainWindow", "Operation", Q_NULLPTR));
         Monitor->setTabText(Monitor->indexOf(Memory1), QApplication::translate("MainWindow", "Memory", Q_NULLPTR));
-        path->setText(QApplication::translate("MainWindow", "File Path", Q_NULLPTR));
         Button_run->setText(QApplication::translate("MainWindow", "Run", Q_NULLPTR));
         Button_stop->setText(QApplication::translate("MainWindow", "Stop", Q_NULLPTR));
-        groupBox_10->setTitle(QApplication::translate("MainWindow", "Running speed", Q_NULLPTR));
-        label->setText(QApplication::translate("MainWindow", "Hz", Q_NULLPTR));
-        nowspeed->setText(QApplication::translate("MainWindow", "50", Q_NULLPTR));
-        path_code->setText(QApplication::translate("MainWindow", "Code Path", Q_NULLPTR));
         Button_code->setText(QApplication::translate("MainWindow", "Load Code", Q_NULLPTR));
         Button_clear->setText(QApplication::translate("MainWindow", "Clear", Q_NULLPTR));
         groupBox_11->setTitle(QApplication::translate("MainWindow", " Codebox", Q_NULLPTR));
+        type->clear();
+        type->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "\344\270\262\350\241\214", Q_NULLPTR)
+         << QApplication::translate("MainWindow", "\347\272\277\347\250\213\345\271\266\350\241\214", Q_NULLPTR)
+         << QApplication::translate("MainWindow", "\350\277\233\347\250\213\345\271\266\350\241\214", Q_NULLPTR)
+        );
+        Button_next_2->setText(QApplication::translate("MainWindow", "Confirm", Q_NULLPTR));
+        label->setText(QApplication::translate("MainWindow", "Running time", Q_NULLPTR));
+        label_2->setText(QApplication::translate("MainWindow", "ms", Q_NULLPTR));
     } // retranslateUi
 
 };

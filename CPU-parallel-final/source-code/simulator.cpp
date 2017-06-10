@@ -196,18 +196,27 @@ void MainWindow::clock_thread(){
 }
 
 void MainWindow::clock_serial(){
-
+    qDebug() << 1;
     s.Control();
+    qDebug() << 2;
     s.Send();
+    qDebug() << 3;
     s.Write_serial();
+    qDebug() << 4;
     s.Memory_serial();
+    qDebug() << 5;
     s.Execute_serial();
+    qDebug() << 6;
     s.Decode_serial();
+    qDebug() << 7;
     s.Fetch_serial();
-    s.circle_time++;}
+    qDebug() << 8;
+    s.circle_time++;
+    qDebug() << 9;
+    refresh();
+}
 
 void MainWindow::clock(){
-    //need to modify
     qDebug() << ui->type->currentIndex();
     switch (ui->type->currentIndex())
     {
