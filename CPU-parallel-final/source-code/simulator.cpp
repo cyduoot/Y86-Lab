@@ -197,28 +197,19 @@ void MainWindow::clock_thread(){
 }
 
 void MainWindow::clock_serial(){
-    qDebug() << 1;
     s.Control();
-    qDebug() << 2;
     s.Send();
-    qDebug() << 3;
     s.Write_serial();
-    qDebug() << 4;
     s.Memory_serial();
-    qDebug() << 5;
     s.Execute_serial();
-    qDebug() << 6;
     s.Decode_serial();
-    qDebug() << 7;
     s.Fetch_serial();
-    qDebug() << 8;
     s.circle_time++;
-    qDebug() << 9;
     refresh();
 }
 
 void MainWindow::clock(){
-    qDebug() << ui->type->currentIndex();
+//    qDebug() << ui->type->currentIndex();
     switch (ui->type->currentIndex())
     {
     case 0:
@@ -299,9 +290,7 @@ void MainWindow::run_serial(){
             return;
         }
         clock();
-        refresh_register();
-        refresh_all();
-        refresh_memory();
+        refresh();
     }
 }
 
@@ -317,9 +306,7 @@ void MainWindow::run_thread(){
             return;
         }
         clock();
-        refresh_register();
-        refresh_all();
-        refresh_memory();
+        refresh();
     }
 }
 
@@ -328,7 +315,7 @@ void MainWindow::run(){
 
     ui->type->setDisabled(true);
     time = QTime::currentTime();
-    qDebug() << time;
+//    qDebug() << time;
     switch (ui->type->currentIndex())
     {
     case 0:
@@ -496,46 +483,31 @@ void MainWindow::refresh_all()
 
 
 void MainWindow::F_work(){
-    qDebug() << "F";
     if (s.F_ret(F)){
-        qDebug() << 1;
         emit need_refresh();
     }
 }
 
 void MainWindow::D_work(){
-    qDebug() << "D";
     if (s.D_ret(D)){
-        qDebug() << 1;
         emit need_refresh();
     }
 }
 
 void MainWindow::E_work(){
-    qDebug() << "E";
     if (s.E_ret(E)){
-        qDebug() << 1;
         emit need_refresh();
     }
 }
 
 void MainWindow::M_work(){
-    qDebug() << "M";
     if (s.M_ret(M)){
-        qDebug() << 1;
         emit need_refresh();
     }
 }
 
 void MainWindow::W_work(){
-    qDebug() << "W";
-/*    qDebug() << "F_done :" << s.F_done;
-    qDebug() << "D_done :" << s.D_done;
-    qDebug() << "E_done :" << s.E_done;
-    qDebug() << "M_done :" << s.M_done;
-    qDebug() << "W_done :" << s.W_done;*/
     if (s.W_ret(W)){
-        qDebug() << 1;
         emit need_refresh();
     }
 }

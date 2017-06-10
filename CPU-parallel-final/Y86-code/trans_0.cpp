@@ -243,6 +243,7 @@ int main(){
 	freopen("bin_code.txt", "w", stdout);
 	while (scanf("%s", s) != EOF){
 		trans();
+//		cout << sout.length() << endl;
 //		cout << sout << endl;
 	}
 //	cout << sout;

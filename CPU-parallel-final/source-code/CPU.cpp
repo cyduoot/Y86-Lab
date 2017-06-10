@@ -342,7 +342,6 @@ void CPU :: Fetch_serial(){
 }
 
 void CPU :: Decode_serial(){
-    qDebug() << "Decode_serial";
     if (D_icode == IRRMOVL || D_icode == IRMMOVL || D_icode == IOPL || D_icode == IPUSHL) d_srcA = D_rA;
     else if (D_icode == IPOPL || D_icode == IRET) d_srcA = RESP;
     else d_srcA = RNONE;
@@ -362,17 +361,14 @@ void CPU :: Decode_serial(){
     if (D_icode == IMRMOVL || D_icode == IPOPL) d_dstM = D_rA;
     else d_dstM = RNONE;
 
-    qDebug() << "SelFwdA";
     SelFwdA_serial();
 
-    qDebug() << "FwdB";
     FwdB_serial();
 
     d_icode = D_icode;
     d_ifun = D_ifun;
     d_stat = D_stat;
     d_valC = D_valC;
-    qDebug() << "END";
 }
 
 void CPU :: Execute_serial(){
@@ -620,7 +616,6 @@ void CPU :: Memory_process(QProcess *M){
     ss << M_stat << ' ' << M_icode << ' ' << M_Cnd << ' ' << M_valE << ' ' << M_valA << ' ' << M_dstE << ' ' << M_dstM << '\n';
     M_done = 0;
     QString OUTPUT = QString :: fromStdString(ss.str());
-    qDebug() << OUTPUT;
     M -> write(OUTPUT.toUtf8());
 }
 
@@ -637,6 +632,8 @@ bool CPU :: F_ret(QProcess *F){
     char ch;
     ss.str("");
     ss << (F -> readAllStandardOutput()).toStdString();
+    qDebug() << "F_ret";
+//    qDebug() << QString :: fromStdString(ss.str());
     ss >> ch;
     if (ch == '*'){
         ss >> f_stat >> f_icode >> f_ifun >> f_rA >> f_rB >> f_valC >> f_valP >> f_PC >> f_predPC;
@@ -644,12 +641,13 @@ bool CPU :: F_ret(QProcess *F){
     }
     else if (ch == '?'){
         int head, len, data;
-        bool imem_error;
+        bool imem_error = 0;
         ss >> head >> len;
         mem_read(head, len, data, imem_error);
         ss.str("");
         ss << data << ' ' << (imem_error?1:0) << '\n';
         QString OUTPUT = QString :: fromStdString(ss.str());
+//        qDebug() << OUTPUT;
         F -> write(OUTPUT.toUtf8());
     }
     else
@@ -713,7 +711,7 @@ bool CPU :: M_ret(QProcess *M){
     }
     else if (ch == '?'){
         int head, len, data;
-        bool imem_error;
+        bool imem_error = 0;
         ss >> head >> len;
         mem_read(head, len, data, imem_error);
         ss.str("");
@@ -723,9 +721,8 @@ bool CPU :: M_ret(QProcess *M){
     }
     else if (ch == '!'){
         int head, len, data;
-        bool imem_error;
+        bool imem_error = 0;
         ss >> head >> len >> data;
-        qDebug() << head << len << data;
         mem_write(head, len, data, imem_error);
         ss.str("");
         ss << (imem_error?1:0) << '\n';
