@@ -3,11 +3,11 @@
 
 #include <bits/stdc++.h>
 #include <QString>
+#include <QProcess>
 #include <QThread>
 #include "global.h"
 #include <windows.h>
 #include <QDebug>
-using namespace std;
 
 #define IHALT 0
 #define INOP 1
@@ -65,9 +65,12 @@ class Process_W : public QThread{
     void run();
 };
 
-
 class CPU{
     public:
+
+    bool _ZF, _OF, _SF, _CF;
+    bool F_done, D_done, E_done, M_done, W_done;
+    bool D_marked_A_e, D_marked_A_m, D_marked_B_e, D_marked_B_m;
 
     char bin_code[MAXLEN];
     int circle_time, speed;
@@ -106,10 +109,6 @@ class CPU{
     Process_M *M;
     Process_W *W;
 
-    string int2str(int x);
-
-    string int2Reg(int x);
-
     void prepare();
 
     void mem_read(int head, int len, int &data, bool &imem_error);
@@ -128,7 +127,7 @@ class CPU{
 
     int get_Register(int src);
 
-    void set_Register(int src, int val);
+    bool set_Register(int src, int val);
 
     void setConditionCode(int a, int b, int t, int alufun, bool &ZF, bool &SF, bool &OF, bool &CF);
 
@@ -150,17 +149,47 @@ class CPU{
 
     void Send();
 
-    void Fetch();
+    void Fetch_serial();
 
-    void Decode();
+    void Decode_serial();
 
-    void Execute();
+    void Execute_serial();
 
-    void Memory();
+    void Memory_serial();
 
-    void Write();
+    void Write_serial();
 
-    void FFF();
+    void Fetch_thread();
+
+    void Decode_thread();
+
+    void Execute_thread();
+
+    void Memory_thread();
+
+    void Write_thread();
+
+    bool F_ret(QProcess*);
+
+    bool D_ret(QProcess*);
+
+    bool E_ret(QProcess*);
+
+    bool M_ret(QProcess*);
+
+    bool W_ret(QProcess*);
+
+    void Fetch_process(QProcess*);
+
+    void Decode_process(QProcess*);
+
+    void Execute_process(QProcess*);
+
+    void Memory_process(QProcess*);
+
+    void Write_process(QProcess*);
+
+    void Forward_Deal();
 };
 
 #endif

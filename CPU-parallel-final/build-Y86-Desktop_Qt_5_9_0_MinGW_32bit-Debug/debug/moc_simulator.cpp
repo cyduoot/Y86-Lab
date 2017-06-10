@@ -6,7 +6,7 @@
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../../../CPU-parallel-final/source-code/simulator.h"
+#include "../../source-code/simulator.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
     QByteArrayData data[11];
-    char stringdata0[108];
+    char stringdata0[100];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -39,13 +39,13 @@ QT_MOC_LITERAL(4, 32, 6), // "D_work"
 QT_MOC_LITERAL(5, 39, 6), // "E_work"
 QT_MOC_LITERAL(6, 46, 6), // "M_work"
 QT_MOC_LITERAL(7, 53, 6), // "W_work"
-QT_MOC_LITERAL(8, 60, 17), // "clock_process_END"
-QT_MOC_LITERAL(9, 78, 20), // "on_speed_sliderMoved"
-QT_MOC_LITERAL(10, 99, 8) // "position"
+QT_MOC_LITERAL(8, 60, 9), // "clock_END"
+QT_MOC_LITERAL(9, 70, 20), // "on_speed_sliderMoved"
+QT_MOC_LITERAL(10, 91, 8) // "position"
 
     },
     "MainWindow\0need_refresh\0\0F_work\0D_work\0"
-    "E_work\0M_work\0W_work\0clock_process_END\0"
+    "E_work\0M_work\0W_work\0clock_END\0"
     "on_speed_sliderMoved\0position"
 };
 #undef QT_MOC_LITERAL
@@ -102,7 +102,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 3: _t->E_work(); break;
         case 4: _t->M_work(); break;
         case 5: _t->W_work(); break;
-        case 6: _t->clock_process_END(); break;
+        case 6: _t->clock_END(); break;
         case 7: _t->on_speed_sliderMoved((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
