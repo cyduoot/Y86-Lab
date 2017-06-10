@@ -8,6 +8,8 @@
 #include <QMessageBox>
 #include <QTextStream>
 #include <QElapsedTimer>
+#include <QTime>
+#include <QFileDialog>
 #include <windows.h>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -24,6 +26,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->Button_clear, &QPushButton::clicked, this, &MainWindow::clear);
 
     connect(this, SIGNAL(need_refresh()), this, SLOT(clock_process_END()));
+
+    ui->runtime->setAlignment(Qt::AlignRight);
+    ui->runtime->setText("0");
 
     F = new  QProcess();
     F->start("F:/2017Spring/ICS/Y86-Lab/CPU-parallel-process/source-code/FDEMW/F.exe");
@@ -90,20 +95,25 @@ void MainWindow::clear()
 void MainWindow::load_code()
 {
     QString path;
-    path = ui->path_code->text();
-    QFile file(path);
-    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QMessageBox::warning(this,"Warnning","File can't open!",QMessageBox::Yes);
-    }
-    QString outcode;
-    outcode = "";
-    while(!file.atEnd())
-    {
-        QByteArray line = file.readLine();
-        QString str(line);
-        outcode += str;
-    }
-    ui->Code->setText(outcode);
+        path = QFileDialog::getOpenFileName(this, tr("Open Code"), ".", tr("Code Files(*.txt *.yo)"));
+        if(path.length() == 0) {
+                        QMessageBox::information(NULL, tr("Path"), tr("You didn't select any files."));
+                } else {
+                        QMessageBox::information(NULL, tr("Path"), tr("You selected ") + path);
+                }
+        QFile file(path);
+        if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            QMessageBox::warning(this,"Warnning","File can't open!",QMessageBox::Yes);
+        }
+        QString outcode;
+        outcode = "";
+        while(!file.atEnd())
+        {
+            QByteArray line = file.readLine();
+            QString str(line);
+            outcode += str;
+        }
+        ui->Code->setText(outcode);
 }
 
 void MainWindow::refresh_register()
@@ -198,6 +208,19 @@ void MainWindow::clock_serial(){
 
 void MainWindow::clock(){
     //need to modify
+    qDebug() << ui->type->currentIndex();
+    switch (ui->type->currentIndex())
+    {
+    case 0:
+        clock_serial();
+        break;
+    case 1:
+        clock_thread();
+        break;
+    case 2:
+        clock_process();
+        break;
+    }
 
 }
 
@@ -205,24 +228,24 @@ void MainWindow::refresh(){
     refresh_register();
     refresh_all();
     refresh_memory();
-    refresh_operation();
 }
 
 void MainWindow::init()
 {
     s.prepare();
-
-    ui->speed->setValue(50);
-    ui->nowspeed->setNum(50);
-    s.speed = 50;
     refresh();
 }
 
 void MainWindow::load()
 {
     QString file_path;
-    init();
-    file_path = ui->path->text();
+        init();
+        file_path = QFileDialog::getOpenFileName(this, tr("Open Binary File"), ".", tr("Code Files(*.txt)"));
+        if(file_path.length() == 0) {
+                        QMessageBox::information(NULL, tr("Path"), tr("You didn't select any files."));
+                } else {
+                        QMessageBox::information(NULL, tr("Path"), tr("You selected ") + file_path);
+                }
     s.read_in(file_path);
     refresh();
 }
@@ -239,10 +262,6 @@ void MainWindow::next()
 
 void MainWindow::runA_process(){
     if (!s.running) return;
-    QElapsedTimer t;
-    t.start();
-    while(t.elapsed()<1000/s.speed)
-        QCoreApplication::processEvents();
     if (s.Stat != SAOK)
     {
         QMessageBox::warning(this,"Warnning","Program is not running!",QMessageBox::Yes);
@@ -261,10 +280,6 @@ void MainWindow::run_serial(){
     s.running = true;
     while (s.running)
     {
-        QElapsedTimer t;
-        t.start();
-        while(t.elapsed()<1000/s.speed)
-            QCoreApplication::processEvents();
         if (s.Stat != SAOK)
         {
             QMessageBox::warning(this,"Warnning","Program is not running!",QMessageBox::Yes);
@@ -275,12 +290,47 @@ void MainWindow::run_serial(){
         refresh_register();
         refresh_all();
         refresh_memory();
-        refresh_operation();
+    }
+}
+
+void MainWindow::run_thread(){
+    s.running = true;
+    while (s.running)
+    {
+        if (s.Stat != SAOK)
+        {
+            QMessageBox::warning(this,"Warnning","Program is not running!",QMessageBox::Yes);
+            s.running = false;
+            return;
+        }
+        clock();
+        refresh_register();
+        refresh_all();
+        refresh_memory();
     }
 }
 
 void MainWindow::run(){
     //need to modify
+
+    ui->type->setDisabled(true);
+    QTime time;
+    time.start();
+    switch (ui->type->currentIndex())
+    {
+    case 0:
+        run_serial();
+        break;
+    case 1:
+        run_thread();
+        break;
+    case 2:
+        run_process();
+        break;
+    }
+    ui->type->setDisabled(false);
+    int t = time.elapsed();
+    ui->runtime->setText(QString::number(t));
 }
 
 void MainWindow::stop()
@@ -432,25 +482,6 @@ void MainWindow::refresh_all()
     ui->W_bubble->setText(s.W_bubble?"true":"false");
 }
 
-void MainWindow::refresh_operation()
-{
-    QString f_op= QString::fromStdString(F_op);
-    QString d_op= QString::fromStdString(D_op);
-    QString e_op= QString::fromStdString(E_op);
-    QString m_op= QString::fromStdString(M_op);
-    QString w_op= QString::fromStdString(W_op);
-    ui->f_opt->setText(f_op);
-    ui->d_opt->setText(d_op);
-    ui->e_opt->setText(e_op);
-    ui->m_opt->setText(m_op);
-    ui->w_opt->setText(w_op);
-}
-
-void MainWindow::on_speed_sliderMoved(int position)
-{
-    ui->nowspeed->setNum(position);
-    s.speed = position;
-}
 
 void MainWindow::F_work(){
     qDebug() << "F";

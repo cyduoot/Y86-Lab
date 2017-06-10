@@ -43,8 +43,8 @@
    <widget class="QPushButton" name="Button_load">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>630</y>
+      <x>140</x>
+      <y>550</y>
       <width>91</width>
       <height>31</height>
      </rect>
@@ -1498,99 +1498,6 @@ p, li { white-space: pre-wrap; }
       </widget>
      </widget>
     </widget>
-    <widget class="QWidget" name="Operation">
-     <attribute name="title">
-      <string>Operation</string>
-     </attribute>
-     <widget class="QTabWidget" name="Pipeline_2">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>20</y>
-        <width>461</width>
-        <height>251</height>
-       </rect>
-      </property>
-      <property name="currentIndex">
-       <number>0</number>
-      </property>
-      <widget class="QWidget" name="Fetch_2">
-       <attribute name="title">
-        <string>Fetch</string>
-       </attribute>
-       <widget class="QTextBrowser" name="f_opt">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>40</y>
-          <width>431</width>
-          <height>171</height>
-         </rect>
-        </property>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="Decode_2">
-       <attribute name="title">
-        <string>Decode</string>
-       </attribute>
-       <widget class="QTextBrowser" name="d_opt">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>40</y>
-          <width>431</width>
-          <height>171</height>
-         </rect>
-        </property>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="Execute_2">
-       <attribute name="title">
-        <string>Execute</string>
-       </attribute>
-       <widget class="QTextBrowser" name="e_opt">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>40</y>
-          <width>431</width>
-          <height>171</height>
-         </rect>
-        </property>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="Memory_2">
-       <attribute name="title">
-        <string>Memory</string>
-       </attribute>
-       <widget class="QTextBrowser" name="m_opt">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>40</y>
-          <width>431</width>
-          <height>171</height>
-         </rect>
-        </property>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="Write_back_2">
-       <attribute name="title">
-        <string>Write_back</string>
-       </attribute>
-       <widget class="QTextBrowser" name="w_opt">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>40</y>
-          <width>431</width>
-          <height>171</height>
-         </rect>
-        </property>
-       </widget>
-      </widget>
-     </widget>
-    </widget>
     <widget class="QWidget" name="Memory">
      <attribute name="title">
       <string>Memory</string>
@@ -1606,19 +1513,6 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </widget>
-   </widget>
-   <widget class="QLineEdit" name="path">
-    <property name="geometry">
-     <rect>
-      <x>140</x>
-      <y>630</y>
-      <width>141</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>File Path</string>
-    </property>
    </widget>
    <widget class="QPushButton" name="Button_run">
     <property name="geometry">
@@ -1646,77 +1540,6 @@ p, li { white-space: pre-wrap; }
      <string>Stop</string>
     </property>
    </widget>
-   <widget class="QGroupBox" name="groupBox_10">
-    <property name="geometry">
-     <rect>
-      <x>290</x>
-      <y>620</y>
-      <width>141</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Running speed</string>
-    </property>
-    <widget class="QSlider" name="speed">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>20</y>
-       <width>101</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="minimum">
-      <number>1</number>
-     </property>
-     <property name="value">
-      <number>50</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>50</y>
-       <width>16</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Hz</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="nowspeed">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>50</y>
-       <width>54</width>
-       <height>12</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>50</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QLineEdit" name="path_code">
-    <property name="geometry">
-     <rect>
-      <x>240</x>
-      <y>550</y>
-      <width>141</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Code Path</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="Button_code">
     <property name="geometry">
      <rect>
@@ -1733,7 +1556,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="Button_clear">
     <property name="geometry">
      <rect>
-      <x>140</x>
+      <x>240</x>
       <y>550</y>
       <width>91</width>
       <height>31</height>
@@ -1777,6 +1600,79 @@ p, li { white-space: pre-wrap; }
       <enum>QTextEdit::NoWrap</enum>
      </property>
     </widget>
+   </widget>
+   <widget class="QComboBox" name="type">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>640</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>串行</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>线程并行</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>进程并行</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QPushButton" name="Button_next_2">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>640</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Confirm</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>630</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Running time</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>650</y>
+      <width>160</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLineEdit" name="runtime"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>ms</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
  </widget>

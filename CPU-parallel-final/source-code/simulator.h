@@ -65,9 +65,6 @@ public slots:
     void W_work();
     void clock_process_END();
 
-private slots:
-    void on_speed_sliderMoved(int position);
-
 private:
     Ui::MainWindow *ui;
 };
