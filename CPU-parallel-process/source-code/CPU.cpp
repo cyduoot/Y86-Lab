@@ -3,32 +3,6 @@
 #include <sstream>
 
 void CPU :: prepare(){
-    if (F != NULL){
-        F -> terminate();
-        F -> waitForFinished();
-        delete F;
-    }
-    if (D != NULL){
-        D -> terminate();
-        D -> waitForFinished();
-        delete D;
-    }
-    if (E != NULL){
-        E -> terminate();
-        E -> waitForFinished();
-        delete E;
-    }
-    if (M != NULL){
-        M -> terminate();
-        M -> waitForFinished();
-        delete M;
-    }
-    if (W != NULL){
-        W -> terminate();
-        W -> waitForFinished();
-        delete W;
-    }
-
     memset(this, 0, sizeof(*this));
     F_predPC = code_head;
     D_icode = E_icode = M_icode = 1;
@@ -45,21 +19,6 @@ void CPU :: prepare(){
     e_dstE = e_dstM = RNONE;
     m_dstE = m_dstM = RNONE;
 
-    F = new  QProcess();
-    F->start("F:/2017Spring/ICS/Y86-Lab/CPU-parallel-process/source-code/FDEMW/F.exe");
-    connect(F, SIGNAL(readyRead()), this, SLOT(F_ret()));
-    D = new  QProcess();
-    D->start("F:/2017Spring/ICS/Y86-Lab/CPU-parallel-process/source-code/FDEMW/D.exe");
-    connect(D, SIGNAL(readyRead()), this, SLOT(D_ret()));
-    E = new  QProcess();
-    E->start("F:/2017Spring/ICS/Y86-Lab/CPU-parallel-process/source-code/FDEMW/E.exe");
-    connect(E, SIGNAL(readyRead()), this, SLOT(E_ret()));
-    M = new  QProcess();
-    M->start("F:/2017Spring/ICS/Y86-Lab/CPU-parallel-process/source-code/FDEMW/M.exe");
-    connect(M, SIGNAL(readyRead()), this, SLOT(M_ret()));
-    W = new  QProcess();
-    W->start("F:/2017Spring/ICS/Y86-Lab/CPU-parallel-process/source-code/FDEMW/W.exe");
-    connect(W, SIGNAL(readyRead()), this, SLOT(W_ret()));
 }
 
 std :: string int2str(int x){
@@ -99,6 +58,14 @@ int CPU :: get_Register(int src){
     return 0xf;
 }
 
+bool CPU :: set_Register(int src, int val){
+    if (src < 8){
+        Reg[src] = val;
+        return 1;
+    }
+    return 0;
+}
+
 void CPU :: read_in(QString path){
     std :: string st = path.toStdString();
     const char *pch = st.c_str();
@@ -122,7 +89,6 @@ void CPU :: cond(int &e_Cnd, bool ZF, bool SF, bool OF, bool CF){
         if (E_ifun == 5) e_Cnd = !(SF^OF);
         if (E_ifun == 6) e_Cnd = !(SF^OF) & !ZF;
     }else e_Cnd = 0;
-//    E_op = E_op + "e_Cnd <- " + int2str(e_Cnd) + '\n';
 }
 
 void CPU :: F_Control(){
@@ -230,55 +196,55 @@ void CPU :: Send(){
     }
 }
 
-void CPU :: Fetch(){
+void CPU :: Fetch(QProcess *F){
     std :: stringstream ss;
-    ss << F_predPC << ' ' << M_icode << ' ' << M_Cnd << ' ' << M_valA << ' ' << W_icode << ' ' << W_valM;
+    ss << F_predPC << ' ' << M_icode << ' ' << M_Cnd << ' ' << M_valA << ' ' << W_icode << ' ' << W_valM << '\n';
     F_done = 0;
-    std :: string OUTPUT = ss.str();
-    qDebug() << OUTPUT.c_str();
-    F -> write(OUTPUT.c_str());
+    QString OUTPUT = QString :: fromStdString(ss.str());
+    F -> write(OUTPUT.toUtf8());
 }
 
-void CPU :: Decode(){
+void CPU :: Decode(QProcess *D){
     std :: stringstream ss;
-    ss << D_stat << ' ' << D_icode << ' ' << D_ifun << ' ' << D_rA << ' ' << D_rB << ' ' << D_valC << ' ' << D_valP << ' ' << M_dstM << ' ';
-    ss << M_dstE << ' ' << M_valE << ' ' << W_dstM << ' ' << W_valM << ' ' << W_dstE << ' ' << W_valE;
+    ss << D_stat << ' ' << D_icode << ' ' << D_ifun << ' ' << D_rA << ' ' << D_rB << ' ' << D_valC << ' ' << D_valP << ' ' << M_dstM << ' '
+       << M_dstE << ' ' << M_valE << ' ' << W_dstM << ' ' << W_valM << ' ' << W_dstE << ' ' << W_valE << '\n';
     D_done = 0;
-    std :: string OUTPUT = ss.str();
-    D -> write(OUTPUT.c_str());
+    QString OUTPUT = QString :: fromStdString(ss.str());
+    D -> write(OUTPUT.toUtf8());
 }
 
-void CPU :: Execute(){
+void CPU :: Execute(QProcess *E){
     std :: stringstream ss;
-    ss << E_stat << ' ' << E_icode << ' ' << E_ifun << ' ' << E_valC << ' ' << E_valA << ' ' << E_valB << ' ' << E_dstE << ' ' << E_dstM << ' ';
-    ss << E_srcA << ' ' << E_srcB << ' ' << (ZF?1:0) << ' ' << (SF?1:0) << ' ' << (OF?1:0) << ' ' << (CF?1:0);
+    ss << E_stat << ' ' << E_icode << ' ' << E_ifun << ' ' << E_valC << ' ' << E_valA << ' ' << E_valB << ' ' << E_dstE << ' ' << E_dstM << ' '
+       << E_srcA << ' ' << E_srcB << ' ' << (ZF?1:0) << ' ' << (SF?1:0) << ' ' << (OF?1:0) << ' ' << (CF?1:0) << '\n';
     E_done = 0;
-    std :: string OUTPUT = ss.str();
-    E -> write(OUTPUT.c_str());
+    QString OUTPUT = QString :: fromStdString(ss.str());
+    E -> write(OUTPUT.toUtf8());
 }
 
-void CPU :: Memory(){
+void CPU :: Memory(QProcess *M){
     std :: stringstream ss;
-    ss << M_stat << ' ' << M_icode << ' ' << M_Cnd << ' ' << M_valE << ' ' << M_valA << ' ' << M_dstE << ' ' << M_dstM;
+    ss << M_stat << ' ' << M_icode << ' ' << M_Cnd << ' ' << M_valE << ' ' << M_valA << ' ' << M_dstE << ' ' << M_dstM << '\n';
     M_done = 0;
-    std :: string OUTPUT = ss.str();
-    M -> write(OUTPUT.c_str());
+    QString OUTPUT = QString :: fromStdString(ss.str());
+    qDebug() << OUTPUT;
+    M -> write(OUTPUT.toUtf8());
 }
 
-void CPU :: Write(){
+void CPU :: Write(QProcess *W){
     std :: stringstream ss;
-    ss << W_stat << ' ' << W_icode << ' ' << W_valE << ' ' << W_valM << ' ' << W_dstE << ' ' << W_dstM;
+    ss << W_stat << ' ' << W_icode << ' ' << W_valE << ' ' << W_valM << ' ' << W_dstE << ' ' << W_dstM << '\n';
     W_done = 0;
-    std :: string OUTPUT = ss.str();
-    W -> write(OUTPUT.c_str());
+    QString OUTPUT = QString :: fromStdString(ss.str());
+    W -> write(OUTPUT.toUtf8());
 }
 
-void CPU :: F_ret(){
+bool CPU :: F_ret(QProcess *F){
     std :: stringstream ss;
     char ch;
-    ss.clear();
+    ss.str("");
     ss << (F -> readAllStandardOutput()).toStdString();
-	ss >> ch;
+    ss >> ch;
     if (ch == '*'){
         ss >> f_stat >> f_icode >> f_ifun >> f_rA >> f_rB >> f_valC >> f_valP >> f_PC >> f_predPC;
         F_done = 1;
@@ -288,41 +254,44 @@ void CPU :: F_ret(){
         bool imem_error;
         ss >> head >> len;
         mem_read(head, len, data, imem_error);
-        ss.clear();
-        ss << data << ' ' << (imem_error?1:0);
-        F -> write(ss.str().c_str());
+        ss.str("");
+        ss << data << ' ' << (imem_error?1:0) << '\n';
+        QString OUTPUT = QString :: fromStdString(ss.str());
+        F -> write(OUTPUT.toUtf8());
     }
-    else{
+    else
         qDebug() << "F Error :" << ch;
-    }
+    return F_done && D_done && E_done && M_done && W_done;
 }
 
-void CPU :: D_ret(){
+bool CPU :: D_ret(QProcess *D){
     std :: stringstream ss;
     char ch;
-    ss.clear();
+    ss.str("");
     ss << (D -> readAllStandardOutput()).toStdString();
-	ss >> ch;
+    ss >> ch;
     if (ch == '*'){
-            ss >> d_stat >> d_icode >> d_ifun >> d_valC >> d_valA >> d_valB >> d_dstE >> d_dstM >> d_srcA >> d_srcB >> d_rvalA >> d_rvalB >> D_marked_A_e >> D_marked_A_m >> D_marked_B_e >> D_marked_B_m;
-            D_done = 1;
-        }
+        ss >> d_stat >> d_icode >> d_ifun >> d_valC >> d_valA >> d_valB >> d_dstE >> d_dstM >> d_srcA >> d_srcB >> d_rvalA >> d_rvalB >> D_marked_A_e >> D_marked_A_m >> D_marked_B_e >> D_marked_B_m;
+        D_done = 1;
+    }
     else if (ch == '?'){
         int src;
         ss >> src;
         int x = get_Register(src);
-        ss.clear();
-        ss << x;
-        D -> write(ss.str().c_str());
+        ss.str("");
+        ss << x << '\n';
+        QString OUTPUT = QString :: fromStdString(ss.str());
+        D -> write(OUTPUT.toUtf8());
     }
-	else
+    else
         qDebug() << "D Error :" << ch;
+    return F_done && D_done && E_done && M_done && W_done;
 }
 
-void CPU :: E_ret(){
+bool CPU :: E_ret(QProcess *E){
     std :: stringstream ss;
     char ch;
-    ss.clear();
+    ss.str("");
     ss << (E -> readAllStandardOutput()).toStdString();
     ss >> ch;
     if (ch == '*'){
@@ -336,12 +305,13 @@ void CPU :: E_ret(){
     }
     else
         qDebug() << "E Error :" << ch;
+    return F_done && D_done && E_done && M_done && W_done;
 }
 
-void CPU :: M_ret(){
+bool CPU :: M_ret(QProcess *M){
     std :: stringstream ss;
     char ch;
-    ss.clear();
+    ss.str("");
     ss << (M -> readAllStandardOutput()).toStdString();
     ss >> ch;
     if (ch == '*'){
@@ -353,35 +323,49 @@ void CPU :: M_ret(){
         bool imem_error;
         ss >> head >> len;
         mem_read(head, len, data, imem_error);
-        ss.clear();
-        ss << data << ' ' << (imem_error?1:0);
-        M -> write(ss.str().c_str());
+        ss.str("");
+        ss << data << ' ' << (imem_error?1:0) << '\n';
+        QString OUTPUT = QString :: fromStdString(ss.str());
+        M -> write(OUTPUT.toUtf8());
     }
     else if (ch == '!'){
         int head, len, data;
         bool imem_error;
         ss >> head >> len >> data;
+        qDebug() << head << len << data;
         mem_write(head, len, data, imem_error);
-        ss.clear();
-        ss << (imem_error?1:0);
-        M -> write(ss.str().c_str());
+        ss.str("");
+        ss << (imem_error?1:0) << '\n';
+        QString OUTPUT = QString :: fromStdString(ss.str());
+        M -> write(OUTPUT.toUtf8());
     }
     else
         qDebug() << "M_Error :" << ch;
+    return F_done && D_done && E_done && M_done && W_done;
 }
 
-void CPU :: W_ret(){
+bool CPU :: W_ret(QProcess *W){
     std :: stringstream ss;
     char ch;
-    ss.clear();
+    ss.str("");
     ss << (W -> readAllStandardOutput()).toStdString();
     ss >> ch;
     if (ch == '*'){
         ss >> Stat;
         W_done = 1;
     }
+    else if (ch == '!'){
+        int src, val;
+        ss >> src >> val;
+        int x = set_Register(src, val);
+        ss.str("");
+        ss << x << '\n';
+        QString OUTPUT = QString :: fromStdString(ss.str());
+        W -> write(OUTPUT.toUtf8());
+    }
     else
         qDebug() << "W_Error :" << ch;
+    return F_done && D_done && E_done && M_done && W_done;
 }
 
 void CPU :: Forward_Deal(){
@@ -404,19 +388,6 @@ void CPU :: Forward_Deal(){
 		d_valA = m_valM;
 	if (D_marked_B_e && d_srcB == e_dstE)
 		d_valB = e_valE;
-	else if (D_marked_B_m && d_srcA == M_dstM)
-		d_valA = m_valM;
-}
-
-void CPU :: FFF(){
-    _ZF = ZF;
-    _SF = SF;
-    _OF = OF;
-    _CF = CF;
-    Fetch();
-	Decode();
-	Execute();
-	Memory();
-	Write();
-	Forward_Deal();
+    else if (D_marked_B_m && d_srcB == M_dstM)
+        d_valB = m_valM;
 }

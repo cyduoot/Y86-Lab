@@ -15,12 +15,15 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    CPU *s;
+    CPU s;
+    QProcess *F, *D, *E, *M, *W;
+
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
     QString get_reg(int);
 
+    void refresh();
     void refresh_register();
     void refresh_memory();
     void refresh_all();
@@ -32,6 +35,7 @@ public:
     void load();
     void next();
     void stop();
+    void runA();
     void run();
     void clock();
 
@@ -42,12 +46,19 @@ public:
     QString getHexM(int);
     QString getHexI(int);
 
+signals:
+    void need_refresh();
 
-    //void test();
+public slots:
+    void F_work();
+    void D_work();
+    void E_work();
+    void M_work();
+    void W_work();
+    void clock_END();
 
 private slots:
     void on_speed_sliderMoved(int position);
-
 
 private:
     Ui::MainWindow *ui;

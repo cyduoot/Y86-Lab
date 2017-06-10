@@ -34,15 +34,12 @@ int W_stat, W_icode, W_valE, W_valM, W_dstE, W_dstM;
 
 int Stat;
 
-string W_op;
-
 void ReadData(){
-	scanf("%d%d%d%d%d%d\n", &W_stat, &W_icode, &W_valE, &W_valM, &W_dstE, &W_dstM);
+	scanf("%d%d%d%d%d%d", &W_stat, &W_icode, &W_valE, &W_valM, &W_dstE, &W_dstM);
 }
 
 void WriteData(){
 	printf("* %d\n", Stat);
-	cout << W_op << endl;
 	fflush(stdout);
 }
 
@@ -54,24 +51,12 @@ string int2str(int x){
     return s;
 }
 
-string int2Reg(int x){
-    switch (x){
-        case 0:return "%eax";
-        case 1:return "%ecx";
-        case 2:return "%edx";
-        case 3:return "%ebx";
-        case 4:return "%esp";
-        case 5:return "%ebp";
-        case 6:return "%esi";
-        case 7:return "%edi";
-    }
-    return "RNONE";
-}
-
 void set_Register(int src, int val){
     if (src < 8){
 		printf("! %d %d\n", src, val);
-        W_op = W_op + "Reg[" + int2Reg(src) + "] <- " + int2str(val) + '\n';
+		fflush(stdout);
+		int x;
+		scanf("%d", &x);
     }
 }
 

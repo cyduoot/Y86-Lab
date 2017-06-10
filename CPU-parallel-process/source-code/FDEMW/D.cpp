@@ -48,7 +48,7 @@ void ReadData(){
 void WriteData(){
 	printf("* %d %d %d %d %d %d %d %d %d %d %d %d ", d_stat, d_icode, d_ifun, d_valC, d_valA, d_valB, d_dstE, d_dstM, d_srcA, d_srcB, d_rvalA, d_rvalB);
 	printf("%d %d %d %d\n", D_marked_A_e, D_marked_A_m, D_marked_B_e, D_marked_B_m);
-	cout << D_op << endl;
+//	cout << D_op << endl;
 	fflush(stdout);
 }
 

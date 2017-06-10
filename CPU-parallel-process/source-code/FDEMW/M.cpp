@@ -41,12 +41,12 @@ bool m_mem_read, m_mem_write, m_dimem_error;
 string M_op;
 
 void ReadData(){
-	scanf("%d%d%d%d%d%d%d\n", &M_stat, &M_icode, &M_Cnd, &M_valE, &M_valA, &M_dstE, &M_dstM);
+	scanf("%d%d%d%d%d%d%d", &M_stat, &M_icode, &M_Cnd, &M_valE, &M_valA, &M_dstE, &M_dstM);
 }
 
 void WriteData(){
 	printf("* %d %d %d %d %d %d\n", m_stat, m_icode, m_valE, m_valM, m_dstE, m_dstM);
-	cout << M_op << endl;
+//	cout << M_op << endl;
 	fflush(stdout);
 }
 

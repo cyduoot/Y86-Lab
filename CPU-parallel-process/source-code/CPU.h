@@ -7,8 +7,6 @@
 #include "global.h"
 #include <windows.h>
 #include <QDebug>
-#include <QObject>
-#include <QMainWindow>
 
 #define IHALT 0
 #define INOP 1
@@ -37,8 +35,7 @@
 
 #define SBUB 0
 
-class CPU : public QObject{
-    Q_OBJECT
+class CPU{
     public:
 
     bool _ZF, _OF, _SF, _CF;
@@ -76,8 +73,6 @@ class CPU : public QObject{
     int W_stat, W_icode, W_valE, W_valM, W_dstE, W_dstM;
     bool W_stall, W_bubble;
 
-    QProcess *F, *D, *E, *M, *W;
-
     void prepare();
 
     std::string int2str(int x);
@@ -87,6 +82,8 @@ class CPU : public QObject{
     void mem_write(int head, int len, int data, bool &imem_error);
 
     int get_Register(int src);
+
+    bool set_Register(int src, int val);
 
     void read_in(QString path);
 
@@ -102,31 +99,31 @@ class CPU : public QObject{
 
     void W_Control();
 
+    bool F_ret(QProcess*);
+
+    bool D_ret(QProcess*);
+
+    bool E_ret(QProcess*);
+
+    bool M_ret(QProcess*);
+
+    bool W_ret(QProcess*);
+
     void Control();
 
     void Send();
 
-    void Fetch();
+    void Fetch(QProcess*);
 
-    void Decode();
+    void Decode(QProcess*);
 
-    void Execute();
+    void Execute(QProcess*);
 
-    void Memory();
+    void Memory(QProcess*);
 
-    void Write();
+    void Write(QProcess*);
 
     void Forward_Deal();
-
-    void FFF();
-
-    signals:
-    public slots:
-    void F_ret();
-    void D_ret();
-    void E_ret();
-    void M_ret();
-    void W_ret();
 };
 
 #endif

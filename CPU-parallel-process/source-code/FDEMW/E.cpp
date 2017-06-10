@@ -44,7 +44,7 @@ string E_op;
 void ReadData(){
 	scanf("%d%d%d%d%d%d%d%d%d%d", &E_stat, &E_icode, &E_ifun, &E_valC, &E_valA, &E_valB, &E_dstE, &E_dstM, &E_srcA, &E_srcB);
 	int z, s, o, c;
-	scanf("%d%d%d%d\n", &z, &s, &o, &c);
+	scanf("%d%d%d%d", &z, &s, &o, &c);
 	ZF = z;
 	SF = s;
 	OF = o;
@@ -59,7 +59,7 @@ void WriteData(){
 	c = CF;
 	printf("* %d %d %d %d %d %d %d %d %d %d ", e_stat, e_icode, e_Cnd, e_valE, e_valA, e_dstE, e_dstM, e_aluA, e_aluB, e_alufun);
 	printf("%d %d %d %d\n", z, s, o, c);
-	cout << E_op << endl;
+//	cout << E_op << endl;
 	fflush(stdout);
 }
 

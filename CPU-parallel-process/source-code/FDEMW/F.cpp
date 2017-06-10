@@ -41,12 +41,12 @@ bool instr_valid, imem_error, need_regids, need_valC;
 string F_op;
 
 void ReadData(){
-	scanf("%d%d%d%d%d%d\n", &F_predPC, &M_icode, &M_Cnd, &M_valA, &W_icode, &W_valM);
+	scanf("%d%d%d%d%d%d", &F_predPC, &M_icode, &M_Cnd, &M_valA, &W_icode, &W_valM);
 }
 
 void WriteData(){
 	printf("* %d %d %d %d %d %d %d %d %d\n", f_stat, f_icode, f_ifun, f_rA, f_rB, f_valC, f_valP, f_PC, f_predPC);
-	cout << F_op << endl;
+//	cout << F_op << endl;
 	fflush(stdout);
 }
 
