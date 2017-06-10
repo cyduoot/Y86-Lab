@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->Button_stop, &QPushButton::clicked, this, &MainWindow::stop);
     connect(ui->Button_code, &QPushButton::clicked, this, &MainWindow::load_code);
     connect(ui->Button_clear, &QPushButton::clicked, this, &MainWindow::clear);
+    time.start();
 
     connect(this, SIGNAL(need_refresh()), this, SLOT(clock_process_END()));
 
@@ -273,6 +274,7 @@ void MainWindow::runA_process(){
     if (!s.running) return;
     if (s.Stat != SAOK)
     {
+        t = time.msecsTo(QTime::currentTime());
         QMessageBox::warning(this,"Warnning","Program is not running!",QMessageBox::Yes);
         s.running = false;
         return;
@@ -291,6 +293,7 @@ void MainWindow::run_serial(){
     {
         if (s.Stat != SAOK)
         {
+            t = time.msecsTo(QTime::currentTime());
             QMessageBox::warning(this,"Warnning","Program is not running!",QMessageBox::Yes);
             s.running = false;
             return;
@@ -308,6 +311,7 @@ void MainWindow::run_thread(){
     {
         if (s.Stat != SAOK)
         {
+            t = time.msecsTo(QTime::currentTime());
             QMessageBox::warning(this,"Warnning","Program is not running!",QMessageBox::Yes);
             s.running = false;
             return;
@@ -323,8 +327,8 @@ void MainWindow::run(){
     //need to modify
 
     ui->type->setDisabled(true);
-    QTime time;
-    time.start();
+    time = QTime::currentTime();
+    qDebug() << time;
     switch (ui->type->currentIndex())
     {
     case 0:
@@ -338,7 +342,6 @@ void MainWindow::run(){
         break;
     }
     ui->type->setDisabled(false);
-    int t = time.elapsed();
     ui->runtime->setText(QString::number(t));
 }
 

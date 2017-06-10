@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QString>
+#include <QTime>
 #include "global.h"
 #include "CPU.h"
 
@@ -53,6 +54,9 @@ public:
     QString getHex(int);
     QString getHexM(int);
     QString getHexI(int);
+
+    QTime time;
+    int t;
 
 signals:
     void need_refresh();
