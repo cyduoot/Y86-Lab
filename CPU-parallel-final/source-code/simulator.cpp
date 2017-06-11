@@ -205,6 +205,7 @@ void MainWindow::clock_serial(){
     s.Decode_serial();
     s.Fetch_serial();
     s.circle_time++;
+    QCoreApplication::processEvents();
     refresh();
 }
 
@@ -266,6 +267,7 @@ void MainWindow::runA_process(){
     if (s.Stat != SAOK)
     {
         t = time.msecsTo(QTime::currentTime());
+        ui->runtime->setText(QString::number(t));
         QMessageBox::warning(this,"Warnning","Program is not running!",QMessageBox::Yes);
         s.running = false;
         return;
@@ -276,6 +278,7 @@ void MainWindow::runA_process(){
 void MainWindow::run_process(){
     s.running = true;
     runA_process();
+    return;
 }
 
 void MainWindow::run_serial(){
@@ -315,7 +318,7 @@ void MainWindow::run(){
 
     ui->type->setDisabled(true);
     time = QTime::currentTime();
-//    qDebug() << time;
+    qDebug() << time;
     switch (ui->type->currentIndex())
     {
     case 0:
