@@ -122,18 +122,12 @@ void CPU :: FwdB_serial(){
 }
 
 void CPU :: SelFwdA_thread(){
+    D_marked_A_e = D_marked_A_m = 0;
     if (D_icode == ICALL || D_icode == IJXX) d_valA = D_valP;
     else{
-        while (E->isRunning())
-            Sleep(0);
-        if (d_srcA == e_dstE)
-            d_valA = e_valE;
-        else if (d_srcA == M_dstM){
-            while (M->isRunning())
-                Sleep(0);
-            d_valA = m_valM;
-        }
-        else if (d_srcA == M_dstE) d_valA = M_valE;
+        D_marked_A_e = 1;
+        D_marked_A_m = 1;
+        if (d_srcA == M_dstE) d_valA = M_valE;
         else if (d_srcA == W_dstM) d_valA = W_valM;
         else if (d_srcA == W_dstE) d_valA = W_valE;
         else d_valA = d_rvalA;
@@ -141,16 +135,8 @@ void CPU :: SelFwdA_thread(){
 }
 
 void CPU :: FwdB_thread(){
-    while (E->isRunning())
-        Sleep(0);
-    if (d_srcB == e_dstE)
-        d_valB = e_valE;
-    else if (d_srcB == M_dstM){
-        while (M->isRunning())
-            Sleep(0);
-        d_valB = m_valM;
-    }
-    else if (d_srcB == M_dstE) d_valB = M_valE;
+    D_marked_B_e = D_marked_B_m = 1;
+    if (d_srcB == M_dstE) d_valB = M_valE;
     else if (d_srcB == W_dstM) d_valB = W_valM;
     else if (d_srcB == W_dstE) d_valB = W_valE;
     else d_valB = d_rvalB;
@@ -522,7 +508,7 @@ void CPU :: Execute_thread(){
     if (E_icode == IOPL) e_alufun = E_ifun;
     else e_alufun = ALUADD;
 
-    e_set_cc = (E_icode == IOPL)
+/*    e_set_cc = (E_icode == IOPL)
                 && !(W_stat == SADR || W_stat == SINS || W_stat == SHLT)
                 && !(M_stat == SADR || M_stat == SINS || M_stat == SHLT);
 
@@ -530,7 +516,8 @@ void CPU :: Execute_thread(){
         while (M->isRunning())
             Sleep(0);
         e_set_cc &= !(m_stat == SADR || m_stat == SINS || m_stat == SHLT);
-    }
+    }*/
+    e_set_cc = 1;
 
     if (need_use_ALU)
         ALU(e_aluA, e_aluB, e_alufun, e_valE, e_set_cc, ZF, SF, OF, CF);
@@ -632,7 +619,7 @@ bool CPU :: F_ret(QProcess *F){
     char ch;
     ss.str("");
     ss << (F -> readAllStandardOutput()).toStdString();
-    qDebug() << "F_ret";
+//    qDebug() << "F_ret";
 //    qDebug() << QString :: fromStdString(ss.str());
     ss >> ch;
     if (ch == '*'){
@@ -770,6 +757,8 @@ void CPU :: Forward_Deal(){
         OF = _OF;
         CF = _CF;
         cond(e_Cnd, ZF, SF, OF, CF);
+        if (E_icode == IRRMOVL && !e_Cnd) e_dstE = RNONE;
+        else e_dstE = E_dstE;
     }
 	
 	if (D_marked_A_e && d_srcA == e_dstE)

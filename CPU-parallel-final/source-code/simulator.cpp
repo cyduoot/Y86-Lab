@@ -167,6 +167,10 @@ void MainWindow::clock_process()
 void MainWindow::clock_thread(){
     s.Control();
     s.Send();
+    s._ZF = s.ZF;
+    s._SF = s.SF;
+    s._OF = s.OF;
+    s._CF = s.CF;
     CPU_Target = &s;
     s.F = new Process_F();
     s.D = new Process_D();
@@ -193,6 +197,7 @@ void MainWindow::clock_thread(){
     delete s.E;
     delete s.M;
     delete s.W;
+    s.Forward_Deal();
     s.circle_time++;
     QCoreApplication::processEvents();
     refresh();
