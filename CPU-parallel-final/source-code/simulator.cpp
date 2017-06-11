@@ -30,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->runtime->setAlignment(Qt::AlignRight);
     ui->runtime->setText("0");
+    t = 0;
 
     F = new  QProcess();
     F->start("F:/2017Spring/ICS/Y86-Lab/CPU-parallel-process/source-code/FDEMW/F.exe");
@@ -193,6 +194,7 @@ void MainWindow::clock_thread(){
     delete s.M;
     delete s.W;
     s.circle_time++;
+    QCoreApplication::processEvents();
     refresh();
 }
 
