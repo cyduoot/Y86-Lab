@@ -1,5 +1,5 @@
 irmovl 1 %ebx
-irmovl 1000 %edx
+irmovl 100 %edx
 irmovl 0 %eax
 addl %ebx %eax
 rrmovl %eax %ecx
